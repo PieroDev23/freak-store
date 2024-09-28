@@ -8,6 +8,9 @@ public class ApplicationDbContext : IdentityDbContext
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
-
+        
     }
+
+    public DbSet<Models.User> DataUser { get; set; }
+
 }
