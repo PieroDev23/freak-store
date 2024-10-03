@@ -36,7 +36,7 @@ namespace freak_store.Models
        [Required]
         public DateTime Deleted_at { get; set; }
 
-        public ICollection<UserPayments>? Payments { get; set; }
-        public ICollection<UserAddresses>? Addresses { get; set; }
+        public ICollection<UserPayment>? Payments { get; set; }
+        public ICollection<UserAddress>? Addresses { get; set; }
     }
 }

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace freak_store.Models
 {
     [Table("products")]
-    public class Products
+    public class Product
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -50,6 +50,6 @@ namespace freak_store.Models
 
         public DateTime? Deleted_at { get; set; }
 
-        public OrderItems? OrderItem { get; set; }
+        public OrderItem? OrderItem { get; set; }
     }
 }

@@ -19,6 +19,6 @@ namespace freak_store.Models
 
         public DateTime? Deleted_at { get; set; }
 
-        public Products? Product { get; set; }
+        public Product? Product { get; set; }
     }
 }

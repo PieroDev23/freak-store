@@ -3,8 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace freak_store.Models
 {
-    [Table("user_addresses")]
-    public class UserAddresses
+    [Table("user_payments")]
+    public class UserPayment
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -13,26 +13,21 @@ namespace freak_store.Models
         [Required]
         public required int User_id { get; set; }
 
+        [ForeignKey("user_id")]
         public User? User { get; set; }
 
         [Required]
-        public required string Address_line1 { get; set; }
-
-        public string? Address_line2 { get; set; }
+        public required string Payment_type { get; set; }
 
         [Required]
-        public required string Postal_code { get; set; }
+        public required string Provider { get; set; }
 
         [Required]
-        public required string Country { get; set; }
-
-        [Required]
-        public required string City { get; set; }
-
+        public required int Account_number { get; set; }
+        
         public DateTime Created_at { get; set; } = DateTime.Now;
 
         public DateTime? Updated_at { get; set; }
 
-        public DateTime? Deleted_at { get; set; }
     }
 }
