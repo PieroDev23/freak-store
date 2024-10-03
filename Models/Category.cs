@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -5,7 +6,7 @@ namespace freak_store.Models
 {
     [Table("categories")]
     public class Category
-    {   
+    {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("id")]
@@ -18,6 +19,7 @@ namespace freak_store.Models
         public string? Description { get; set; }
 
         [Column("created_at")]
+        [DefaultValue("CURRENT_TIMESTAMP")]
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
         [Column("updated_at")]
