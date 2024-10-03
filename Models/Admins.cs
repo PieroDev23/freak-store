@@ -1,11 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-
 namespace freak_store.Models
 {
-    [Table("users")]
-    public class User
+    [Table("admins")]
+    public class Admins
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -15,28 +14,20 @@ namespace freak_store.Models
         public required string first_name { get; set; }
 
         [Required]
-        public required string Password { get; set; }
-
-        [Required]
-        public required int phone { get; set; }
-
-        [Required]
         public required string last_name { get; set; }
-        [Required]
-        public required string username { get; set; }
 
         [Required]
         public required string email { get; set; }
 
+        [Required]
+        public required string password { get; set; }
+
         public DateTime create_at { get; set; } = DateTime.Now;
 
-        [Required]
-        public DateTime update_at { get; set; }
+        public DateTime? update_at { get; set; }
 
-       [Required]
-        public DateTime deleted_at { get; set; }
+        public DateTime? deleted_at { get; set; }
 
-        public ICollection<UserPayments>? Payments { get; set; }
-        public ICollection<UserAddresses>? Addresses { get; set; }
+        public AdminType? AdminType { get; set; }
     }
 }
