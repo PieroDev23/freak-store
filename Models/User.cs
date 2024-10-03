@@ -7,6 +7,8 @@ namespace freak_store.Models
     [Table("users")]
     public class User
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("id")]
         public Guid Id { get; set; }
 
@@ -30,7 +32,7 @@ namespace freak_store.Models
 
         [Column("created_at")]
         public DateTime CreatedAt { get; set; } = DateTime.Now;
-    
+
         [Column("updated_at")]
         public DateTime? UpdatedAt { get; set; }
 

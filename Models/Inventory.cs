@@ -6,6 +6,8 @@ namespace freak_store.Models
     [Table("inventory")]
     public class Inventory
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("id")]
         public Guid Id { get; set; }
 
