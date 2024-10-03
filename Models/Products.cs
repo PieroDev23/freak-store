@@ -11,43 +11,44 @@ namespace freak_store.Models
         public int Id { get; set; }
 
         [Required]
-        public required string name { get; set; }
+        public required string Name { get; set; }
 
         [Required]
-        public required string description { get; set; }
+        public required string Description { get; set; }
 
         [Column(TypeName = "smallint")]
         public short Price { get; set; }
 
         [Required]
-        public required string sku { get; set; }
+        public required string Sku { get; set; }
 
         [Required]
-        public required int category_id { get; set; }
+        public required int Category_id { get; set; }
 
         [ForeignKey("category_id")]
-        public Categories? Category { get; set; }
+        public Category? Category { get; set; }
 
         [Required]
-        public required int inventory_id { get; set; }
+        public required int Inventory_id { get; set; }
 
         [ForeignKey("inventory_id")]
         public Inventory? Inventory { get; set; }
 
         [Required]
-        public required int discount_id { get; set; }
+        public int Discount_id { get; set; }
 
+        [Required]
         [ForeignKey("discount_id")]
-        public Discounts? Discount { get; set; }
+        public required Discounts Discount { get; set; }
 
-        [Column(TypeName = "text")]
-        public string? img { get; set; }
+        [Column(TypeName = "varchar")]
+        public string? Img { get; set; }
 
-        public DateTime create_at { get; set; } = DateTime.Now;
+        public DateTime Created_at { get; set; } = DateTime.Now;
 
-        public DateTime? update_at { get; set; }
+        public DateTime? Updated_at { get; set; }
 
-        public DateTime? deleted_at { get; set; }
+        public DateTime? Deleted_at { get; set; }
 
         public OrderItems? OrderItem { get; set; }
     }

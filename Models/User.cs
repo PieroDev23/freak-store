@@ -12,29 +12,29 @@ namespace freak_store.Models
         public int Id { get; set; }
 
         [Required]
-        public required string first_name { get; set; }
+        public required string First_name { get; set; }
 
         [Required]
         public required string Password { get; set; }
 
         [Required]
-        public required int phone { get; set; }
+        public required int Phone { get; set; }
 
         [Required]
-        public required string last_name { get; set; }
+        public required string Last_name { get; set; }
         [Required]
-        public required string username { get; set; }
+        public required string Username { get; set; }
 
         [Required]
-        public required string email { get; set; }
+        public required string Email { get; set; }
 
-        public DateTime create_at { get; set; } = DateTime.Now;
+        public DateTime Created_at { get; set; } = DateTime.Now;
 
         [Required]
-        public DateTime update_at { get; set; }
+        public DateTime Updated_at { get; set; }
 
        [Required]
-        public DateTime deleted_at { get; set; }
+        public DateTime Deleted_at { get; set; }
 
         public ICollection<UserPayments>? Payments { get; set; }
         public ICollection<UserAddresses>? Addresses { get; set; }

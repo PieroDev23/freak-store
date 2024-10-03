@@ -13,11 +13,11 @@ public class ApplicationDbContext : IdentityDbContext
 
     public DbSet<Models.User> DataUser { get; set; }
 
-    public DbSet<Models.Admins> DataAdmins { get; set; }
+    public DbSet<Models.Admin> DataAdmins { get; set; }
 
     public DbSet<Models.AdminType> DataAdminsType { get; set; }
 
-    public DbSet<Models.Categories> DataCategories { get; set; }
+    public DbSet<Models.Category> DataCategories { get; set; }
 
     public DbSet<Models.Discounts> DataDiscounts { get; set; }
 

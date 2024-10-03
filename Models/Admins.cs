@@ -4,30 +4,30 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace freak_store.Models
 {
     [Table("admins")]
-    public class Admins
+    public class Admin
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Required]
-        public required string first_name { get; set; }
+        public required string First_name { get; set; }
 
         [Required]
-        public required string last_name { get; set; }
+        public required string Last_name { get; set; }
 
         [Required]
-        public required string email { get; set; }
+        public required string Email { get; set; }
 
         [Required]
-        public required string password { get; set; }
+        public required string Password { get; set; }
 
-        public DateTime create_at { get; set; } = DateTime.Now;
+        public DateTime Created_at { get; set; } = DateTime.Now;
+        
+        public DateTime? Updated_at { get; set; }
 
-        public DateTime? update_at { get; set; }
+        public DateTime? Deleted_at { get; set; }
 
-        public DateTime? deleted_at { get; set; }
-
-        public AdminType? AdminType { get; set; }
+        public AdminType? Admin_type { get; set; }
     }
 }

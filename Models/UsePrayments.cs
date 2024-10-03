@@ -11,23 +11,23 @@ namespace freak_store.Models
         public int Id { get; set; }
 
         [Required]
-        public required int user_id { get; set; }
+        public required int User_id { get; set; }
 
         [ForeignKey("user_id")]
         public User? User { get; set; }
 
         [Required]
-        public required string payment_type { get; set; }
+        public required string Payment_type { get; set; }
 
         [Required]
-        public required string provider { get; set; }
+        public required string Provider { get; set; }
 
         [Required]
-        public required int account_number { get; set; }
+        public required int Account_number { get; set; }
         
-        public DateTime create_at { get; set; } = DateTime.Now;
+        public DateTime Created_at { get; set; } = DateTime.Now;
 
-        public DateTime? update_at { get; set; }
+        public DateTime? Updated_at { get; set; }
 
     }
 }

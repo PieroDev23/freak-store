@@ -10,16 +10,16 @@ namespace freak_store.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        public int? order_id { get; set; }
+        public int? Order_id { get; set; }
 
         public OrderDetails? OrderDetail { get; set; }
 
-        public int? total_amount { get; set; }
-        public string? provider { get; set; }
-        public string? status { get; set; }
+        public int? Total_amount { get; set; }
+        public string? Provider { get; set; }
+        public string? Status { get; set; }
 
-        public DateTime create_at { get; set; } = DateTime.Now;
+        public DateTime Created_at { get; set; } = DateTime.Now;
 
-        public DateTime? update_at { get; set; }
+        public DateTime? Updated_at { get; set; }
     }
 }

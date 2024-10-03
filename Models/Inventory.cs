@@ -11,13 +11,13 @@ namespace freak_store.Models
         public int Id { get; set; }
 
         [Required]
-        public required int quantity { get; set; }
+        public required int Quantity { get; set; }
 
-        public DateTime create_at { get; set; } = DateTime.Now;
+        public DateTime Created_at { get; set; } = DateTime.Now;
 
-        public DateTime? update_at { get; set; }
+        public DateTime? Updated_at { get; set; }
 
-        public DateTime? deleted_at { get; set; }
+        public DateTime? Deleted_at { get; set; }
 
         public Products? Product { get; set; }
     }
