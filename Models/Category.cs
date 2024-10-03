@@ -1,5 +1,3 @@
-using System;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace freak_store.Models
@@ -7,8 +5,13 @@ namespace freak_store.Models
     [Table("categories")]
     public class Category
     {
+        [Column("id")]
         public Guid Id { get; set; }
+
+        [Column("name")]
         public string? Name { get; set; }
+
+        [Column("description")]
         public string? Description { get; set; }
 
         [Column("created_at")]

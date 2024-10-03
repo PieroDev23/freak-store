@@ -1,4 +1,4 @@
-namespace freak_store.Models;
+namespace freak_store.ViewModels;
 
 public class ErrorViewModel
 {

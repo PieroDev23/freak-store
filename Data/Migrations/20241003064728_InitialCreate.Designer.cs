@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using freak_store.Data;
@@ -11,9 +12,11 @@ using freak_store.Data;
 namespace freak_store.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241003064728_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -310,8 +313,7 @@ namespace freak_store.Data.Migrations
                         .HasColumnName("id");
 
                     b.Property<Guid>("CategoryId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("category_id");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone")
@@ -326,16 +328,14 @@ namespace freak_store.Data.Migrations
                         .HasColumnName("description");
 
                     b.Property<Guid?>("DiscountId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("discount_id");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Img")
                         .HasColumnType("text")
                         .HasColumnName("img");
 
                     b.Property<Guid?>("InventoryId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("inventory_id");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .HasColumnType("text")

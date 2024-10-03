@@ -6,7 +6,10 @@ namespace freak_store.Models
     [Table("discounts")]
     public class Discount
     {
+        [Column("id")]
         public Guid Id { get; set; }
+
+        [Column("percentage")]
         public int Percentage { get; set; }
 
         [Column("created_at")]

@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using freak_store.Models;
+using freak_store.ViewModels;
 
 namespace freak_store.Controllers;
 

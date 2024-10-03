@@ -6,13 +6,16 @@ namespace freak_store.Models
     [Table("inventory")]
     public class Inventory
     {
+        [Column("id")]
         public Guid Id { get; set; }
+
+        [Column("quantity")]
         public int Quantity { get; set; }
 
         [Column("created_at")]
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
         // Foreign key
-         public ICollection<Product>? Products { get; set; }
+        public ICollection<Product>? Products { get; set; }
     }
 }
