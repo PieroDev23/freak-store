@@ -4,21 +4,20 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace freak_store.Models
 {
     [Table("discounts")]
-    public class Discounts
+    public class Discount
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
+        public int Percentage { get; set; }
 
-        [Required]
-        public required int Quantity { get; set; }
+        [Column("created_at")]
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
 
-        public DateTime Created_at { get; set; } = DateTime.Now;
+        [Column("updated_at")]
+        public DateTime? UpdatedAt { get; set; }
 
-        public DateTime? Updated_at { get; set; }
+        [Column("deleted_at")]
+        public DateTime? DeletedAt { get; set; }
 
-        public DateTime? Deleted_at { get; set; }
-
-        public ICollection<Products>? Products { get; set; } 
+        public ICollection<Product>? Products { get; set; }
     }
 }

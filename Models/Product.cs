@@ -6,50 +6,30 @@ namespace freak_store.Models
     [Table("products")]
     public class Product
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
-        [Required]
-        public required string Name { get; set; }
-
-        [Required]
-        public required string Description { get; set; }
-
-        [Column(TypeName = "smallint")]
-        public short Price { get; set; }
-
-        [Required]
-        public required string Sku { get; set; }
-
-        [Required]
-        public required int Category_id { get; set; }
-
-        [ForeignKey("category_id")]
-        public Category? Category { get; set; }
-
-        [Required]
-        public required int Inventory_id { get; set; }
-
-        [ForeignKey("inventory_id")]
-        public Inventory? Inventory { get; set; }
-
-        [Required]
-        public int Discount_id { get; set; }
-
-        [Required]
-        [ForeignKey("discount_id")]
-        public required Discounts Discount { get; set; }
-
-        [Column(TypeName = "varchar")]
+        public Guid Id { get; set; }
+        public string? Name { get; set; }
+        public string? Description { get; set; }
+        public decimal Price { get; set; }
+        public string? Sku { get; set; }
         public string? Img { get; set; }
 
-        public DateTime Created_at { get; set; } = DateTime.Now;
+        [Column("created_at")]
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
 
-        public DateTime? Updated_at { get; set; }
+        [Column("updated_at")]
+        public DateTime? UpdatedAt { get; set; }
 
-        public DateTime? Deleted_at { get; set; }
+        [Column("deleted_at")]
+        public DateTime? DeletedAt { get; set; }
 
-        public OrderItem? OrderItem { get; set; }
+        public Guid CategoryId { get; set; }
+        public Category? Category { get; set; }
+
+        public Guid? DiscountId { get; set; }
+        public Discount? Discount { get; set; }
+
+
+        public Guid? InventoryId { get; set; }
+        public Inventory? Inventory { get; set; }
     }
 }

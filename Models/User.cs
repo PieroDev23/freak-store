@@ -7,36 +7,31 @@ namespace freak_store.Models
     [Table("users")]
     public class User
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
-        [Required]
-        public required string First_name { get; set; }
+        [Column("first_name")]
+        public required string Firstname { get; set; }
 
-        [Required]
         public required string Password { get; set; }
 
-        [Required]
         public required int Phone { get; set; }
 
-        [Required]
-        public required string Last_name { get; set; }
-        [Required]
+        [Column("last_name")]
+        public required string Lastname { get; set; }
+
+        
         public required string Username { get; set; }
 
-        [Required]
         public required string Email { get; set; }
 
-        public DateTime Created_at { get; set; } = DateTime.Now;
+        [Column("created_at")]
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
 
-        [Required]
-        public DateTime Updated_at { get; set; }
+        [Column("updated_at")]
+        public DateTime? UpdatedAt { get; set; }
 
-       [Required]
-        public DateTime Deleted_at { get; set; }
+        [Column("deleted_at")]
+        public DateTime? DeletedAt { get; set; }
 
-        public ICollection<UserPayment>? Payments { get; set; }
-        public ICollection<UserAddress>? Addresses { get; set; }
     }
 }
