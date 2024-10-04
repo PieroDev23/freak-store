@@ -32,7 +32,10 @@
                         <a class="nav-link text-white" href="tel:970386792">970386792</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#"><i class="bi bi-person"></i></a>
+                        <!-- Cambiado para redirigir al login (Acceso/Index) -->
+                        <a class="nav-link text-white" href="@Url.Action("Index", "Acceso")">
+                            <i class="bi bi-person"></i>
+                        </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white" href="#"><i class="bi bi-cart"></i></a>
@@ -68,12 +71,11 @@
                                 <li><a class="dropdown-item" href="#">Teclado Inalámbrico</a></li>
                             </ul>
                         </li>
-                        <!-- Nuevas categorías añadidas: Catálogo y Contacto -->
                         <li class="nav-item">
-                            <a class="nav-link" href="/Catalog">CATÁLOGO</a> <!-- Enlace a la página del catálogo -->
+                            <a class="nav-link" href="/Catalog">CATÁLOGO</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/Contacto">CONTACTO</a> <!-- Enlace a la página de contacto -->
+                            <a class="nav-link" href="/Contacto">CONTACTO</a>
                         </li>
                     </ul>
                 </div>
