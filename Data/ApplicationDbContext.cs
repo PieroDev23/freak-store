@@ -11,14 +11,16 @@ public class ApplicationDbContext : IdentityDbContext
         
     }
 
-    public DbSet<Models.User> DataUser { get; set; }
+    // DbSets para cada modelo
+    public DbSet<Models.User> DataUsers { get; set; }  // Cambié "DataUser" a "DataUsers" para mantener consistencia en plural
 
     public DbSet<Models.Category> DataCategories { get; set; }
 
     public DbSet<Models.Discount> DataDiscounts { get; set; }
 
-    public DbSet<Models.Inventory> DataInventory { get; set; }
+    public DbSet<Models.Inventory> DataInventories { get; set; }
 
+    // Agregar el DbSet para Products
+    public DbSet<Models.Product> DataProducts { get; set; }
 
-    
 }
