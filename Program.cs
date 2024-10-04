@@ -32,9 +32,18 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+// Ruta por defecto para el controlador Home
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+// Ruta específica para el filtro por categoría en el catálogo
+app.MapControllerRoute(
+    name: "catalog",
+    pattern: "Catalog/{categoryId?}",
+    defaults: new { controller = "Catalog", action = "Index" }
+);
+
 app.MapRazorPages();
 
 app.Run();

@@ -1,25 +1,32 @@
 {
   "format": 1,
   "restore": {
-    "E:\\workshop\\usmp\\progra1\\freak-store\\freak-store.csproj": {}
+    "C:\\Users\\Sebastean\\Desktop\\preoyecto progra\\freak-store.csproj": {}
   },
   "projects": {
-    "E:\\workshop\\usmp\\progra1\\freak-store\\freak-store.csproj": {
+    "C:\\Users\\Sebastean\\Desktop\\preoyecto progra\\freak-store.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\workshop\\usmp\\progra1\\freak-store\\freak-store.csproj",
+        "projectUniqueName": "C:\\Users\\Sebastean\\Desktop\\preoyecto progra\\freak-store.csproj",
         "projectName": "freak-store",
-        "projectPath": "E:\\workshop\\usmp\\progra1\\freak-store\\freak-store.csproj",
-        "packagesPath": "C:\\Users\\piero\\.nuget\\packages\\",
-        "outputPath": "E:\\workshop\\usmp\\progra1\\freak-store\\obj\\",
+        "projectPath": "C:\\Users\\Sebastean\\Desktop\\preoyecto progra\\freak-store.csproj",
+        "packagesPath": "C:\\Users\\Sebastean\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Sebastean\\Desktop\\preoyecto progra\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\piero\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Sebastean\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -83,7 +90,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
