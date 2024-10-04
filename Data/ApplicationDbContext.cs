@@ -12,18 +12,13 @@ public class ApplicationDbContext : IdentityDbContext
 
     }
 
-<<<<<<< HEAD
-    public DbSet<User> DataUser { get; set; }
-=======
     // DbSets para cada modelo
     public DbSet<Models.User> DataUsers { get; set; }  // Cambié "DataUser" a "DataUsers" para mantener consistencia en plural
->>>>>>> 0795fdfc49e42f3ec14d934b735ca2dbf9385ab4
 
     public DbSet<Category> DataCategories { get; set; }
 
     public DbSet<Discount> DataDiscounts { get; set; }
 
-<<<<<<< HEAD
     public DbSet<Inventory> DataInventory { get; set; }
 
     public DbSet<Contact> DataContact { get; set; }
@@ -58,11 +53,4 @@ public class ApplicationDbContext : IdentityDbContext
             .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
     }
-=======
-    public DbSet<Models.Inventory> DataInventories { get; set; }
-
-    // Agregar el DbSet para Products
-    public DbSet<Models.Product> DataProducts { get; set; }
-
->>>>>>> 0795fdfc49e42f3ec14d934b735ca2dbf9385ab4
 }
