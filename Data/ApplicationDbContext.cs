@@ -12,7 +12,7 @@ public class ApplicationDbContext : IdentityDbContext
 
     }
 
-    public DbSet<User> DataUser { get; set; }
+    public DbSet<User> DataUsers { get; set; }  
 
     public DbSet<Category> DataCategories { get; set; }
 
@@ -21,6 +21,8 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<Inventory> DataInventory { get; set; }
 
     public DbSet<Contact> DataContact { get; set; }
+
+    public DbSet<Product> DataProducts { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
