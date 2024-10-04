@@ -13,7 +13,7 @@ public class ApplicationDbContext : IdentityDbContext
     }
 
     // DbSets para cada modelo
-    public DbSet<Models.User> DataUsers { get; set; }  // Cambié "DataUser" a "DataUsers" para mantener consistencia en plural
+    public DbSet<User> DataUsers { get; set; }  // Cambié "DataUser" a "DataUsers" para mantener consistencia en plural
 
     public DbSet<Category> DataCategories { get; set; }
 
@@ -22,6 +22,8 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<Inventory> DataInventory { get; set; }
 
     public DbSet<Contact> DataContact { get; set; }
+
+    public DbSet<Product> DataProducts { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

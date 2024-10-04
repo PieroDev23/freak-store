@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using freak_store.Data;
-using freak_store.Models;
-using System.Linq;
 
 namespace freak_store.Controllers
 {
