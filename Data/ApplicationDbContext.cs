@@ -12,8 +12,7 @@ public class ApplicationDbContext : IdentityDbContext
 
     }
 
-    // DbSets para cada modelo
-    public DbSet<User> DataUsers { get; set; }  // Cambié "DataUser" a "DataUsers" para mantener consistencia en plural
+    public DbSet<User> DataUsers { get; set; }  
 
     public DbSet<Category> DataCategories { get; set; }
 
