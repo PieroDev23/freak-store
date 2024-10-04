@@ -58,7 +58,7 @@ namespace freak_store.Data.Migrations
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     name = table.Column<string>(type: "text", nullable: true),
                     description = table.Column<string>(type: "text", nullable: true),
-                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
                     updated_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     deleted_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
@@ -73,7 +73,7 @@ namespace freak_store.Data.Migrations
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     percentage = table.Column<int>(type: "integer", nullable: false),
-                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
                     updated_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     deleted_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
@@ -88,7 +88,7 @@ namespace freak_store.Data.Migrations
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     quantity = table.Column<int>(type: "integer", nullable: false),
-                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
                 },
                 constraints: table =>
                 {
@@ -106,7 +106,7 @@ namespace freak_store.Data.Migrations
                     last_name = table.Column<string>(type: "text", nullable: false),
                     username = table.Column<string>(type: "text", nullable: false),
                     email = table.Column<string>(type: "text", nullable: false),
-                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
                     updated_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     deleted_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
@@ -231,30 +231,30 @@ namespace freak_store.Data.Migrations
                     price = table.Column<decimal>(type: "numeric", nullable: false),
                     sku = table.Column<string>(type: "text", nullable: true),
                     img = table.Column<string>(type: "text", nullable: true),
-                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
                     updated_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     deleted_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    CategoryId = table.Column<Guid>(type: "uuid", nullable: false),
-                    DiscountId = table.Column<Guid>(type: "uuid", nullable: true),
-                    InventoryId = table.Column<Guid>(type: "uuid", nullable: true)
+                    category_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    discount_id = table.Column<Guid>(type: "uuid", nullable: true),
+                    inventory_id = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_products", x => x.id);
                     table.ForeignKey(
-                        name: "FK_products_categories_CategoryId",
-                        column: x => x.CategoryId,
+                        name: "FK_products_categories_category_id",
+                        column: x => x.category_id,
                         principalTable: "categories",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_products_discounts_DiscountId",
-                        column: x => x.DiscountId,
+                        name: "FK_products_discounts_discount_id",
+                        column: x => x.discount_id,
                         principalTable: "discounts",
                         principalColumn: "id");
                     table.ForeignKey(
-                        name: "FK_products_inventory_InventoryId",
-                        column: x => x.InventoryId,
+                        name: "FK_products_inventory_inventory_id",
+                        column: x => x.inventory_id,
                         principalTable: "inventory",
                         principalColumn: "id");
                 });
@@ -297,19 +297,19 @@ namespace freak_store.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_products_CategoryId",
+                name: "IX_products_category_id",
                 table: "products",
-                column: "CategoryId");
+                column: "category_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_products_DiscountId",
+                name: "IX_products_discount_id",
                 table: "products",
-                column: "DiscountId");
+                column: "discount_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_products_InventoryId",
+                name: "IX_products_inventory_id",
                 table: "products",
-                column: "InventoryId");
+                column: "inventory_id");
         }
 
         /// <inheritdoc />
