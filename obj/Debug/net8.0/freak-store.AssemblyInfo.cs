@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("freak-store")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+95cb37afbc5f6d9f26d5c3b4ccfb2e9e06b2187c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+45f5ef676fb7b09b03021c29e28df8d1bc45236d")]
 [assembly: System.Reflection.AssemblyProductAttribute("freak-store")]
 [assembly: System.Reflection.AssemblyTitleAttribute("freak-store")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

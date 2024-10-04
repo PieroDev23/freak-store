@@ -20,6 +20,8 @@ public class ApplicationDbContext : IdentityDbContext
 
     public DbSet<Inventory> DataInventory { get; set; }
 
+    public DbSet<Contact> DataContact { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
 
@@ -45,7 +47,9 @@ public class ApplicationDbContext : IdentityDbContext
             .Property(b => b.CreatedAt)
             .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
+        modelBuilder.Entity<Contact>()
+            .Property(b => b.CreatedAt)
+            .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
     }
-
-
 }
