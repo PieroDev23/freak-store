@@ -1,6 +1,8 @@
 @{
+    ViewData["Title"] = "Login";
     Layout = null;
 }
+
 
 @model freak_store.Models.User
 
@@ -22,9 +24,9 @@
         }
 
         .login-container {
-            max-width: 400px;
+            width: 548px;
+            max-width: 90%;
             /* Ancho máximo del cuadro */
-            margin: auto;
             /* Centra el cuadro en la pantalla */
             padding: 20px;
             /* Espaciado interno */
@@ -68,22 +70,23 @@
     </style>
 </head>
 
-<body>
+<body style="height: 100dvh; display: flex; justify-content: center; align-items: center; flex-direction: column;">
+    <img src="https://i.imgur.com/a6arYkc.png" alt="">
     <div class="login-container mt-5">
+
         <h2 class="text-center">Iniciar Sesión</h2>
-        <form asp-controller="Login" asp-action="InicioSesion" method="post">
-            <div class="form-group">
-                <label asp-for="Username" class="control-label">Nombre de Usuario:</label>
-                <input asp-for="Username" class="form-control" placeholder="Ingresa tu nombre de usuario" required />
+        <form asp-controller="Login" asp-action="InicioSesion" method="post" class="d-flex flex-column gap-3 px-5 pb-5 pt-3">
+            <div class="form-group ">
+                <input asp-for="Username" class="form-control" placeholder="Usuario" required
+                    style="background-color: #D9D9D9 !important;" />
                 <span asp-validation-for="Username" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Password" class="control-label">Contraseña:</label>
-                <input asp-for="Password" type="password" class="form-control" placeholder="Ingresa tu contraseña"
-                    required />
+                <input asp-for="Password" type="password" class="form-control" placeholder="Contraseña"
+                    style="background-color: #D9D9D9 !important;" required />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-primary btn-block">Iniciar Sesión</button>
+            <button type="submit" class="btn btn-primary btn-block" style="background-color: #171384; border: unset;">Comenzar</button>
         </form>
     </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

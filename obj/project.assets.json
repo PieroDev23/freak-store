@@ -2747,19 +2747,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\OS\\.nuget\\packages\\": {}
+    "C:\\Users\\piero\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\OS\\Desktop\\Nueva carpeta (2)\\freak-store\\freak-store.csproj",
+      "projectUniqueName": "E:\\workshop\\usmp\\progra1\\freak-store\\freak-store.csproj",
       "projectName": "freak-store",
-      "projectPath": "C:\\Users\\OS\\Desktop\\Nueva carpeta (2)\\freak-store\\freak-store.csproj",
-      "packagesPath": "C:\\Users\\OS\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\OS\\Desktop\\Nueva carpeta (2)\\freak-store\\obj\\",
+      "projectPath": "E:\\workshop\\usmp\\progra1\\freak-store\\freak-store.csproj",
+      "packagesPath": "C:\\Users\\piero\\.nuget\\packages\\",
+      "outputPath": "E:\\workshop\\usmp\\progra1\\freak-store\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\OS\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\piero\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -2828,7 +2828,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
