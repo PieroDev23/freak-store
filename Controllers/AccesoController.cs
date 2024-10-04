@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using freak_store.Models; 
+using freak_store.Models;
 using freak_store.Data;
 
 namespace freak_store.Controllers
@@ -25,21 +25,21 @@ namespace freak_store.Controllers
         [HttpPost]
         public IActionResult InicioSesion(User model)
         {
-            if (ModelState.IsValid)
-            {
-                // Validar usuario en la base de datos con el modelo correcto
-                var user = _context.DataUsers.FirstOrDefault(x => x.Username == model.Username);
 
-                if (user != null)
-                {
-                    // Si el usuario existe, autenticación exitosa
-                    return RedirectToAction("Index", "Home"); // Redirige a la página principal
-                }
-                else
-                {
-                    // Si el usuario no es encontrado, mostrar mensaje de error
-                    ViewBag.Error = "Usuario o contraseña incorrectos";
-                }
+            _logger.LogInformation($"Username: {model.Username}");
+            _logger.LogInformation($"Phone: {model.Password}");
+
+            // Validar usuario en la base de datos con el modelo correcto
+            var user = _context.DataUsers.FirstOrDefault(x => x.Username == model.Username && x.Password == model.Password);
+            if (user != null)
+            {
+                // Si el usuario existe, autenticación exitosa
+                return RedirectToAction("Index", "Home"); // Redirige a la página principal
+            }
+            else
+            {
+                // Si el usuario no es encontrado, mostrar mensaje de error
+                ViewBag.Error = "Usuario o contraseña incorrectos";
             }
 
             // Si algo falla, devolver la vista de login con el mensaje de error
