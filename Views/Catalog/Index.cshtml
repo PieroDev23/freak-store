@@ -27,33 +27,34 @@
             <div class="row">
                 @foreach (var product in Model)
                 {
-                <div class="col-12 col-md-3 mb-4">
-                    <div class="card h-100">
-                        <img src="@product.Img" class="card-img-top" alt="@product.Name"
-                            style="object-fit: cover;">
-                        <div class="card-body">
-                            <h6 class="card-title">@product.Name</h6>
-                            <p class="card-text">S/. @product.Price</p>
-                            <!-- Verificación de stock -->
-                            @if (product.Inventory != null && product.Inventory.Quantity > 0)
-                            {
-                                <span class="badge bg-success">Disponible</span>
-                                <p class="mt-2">Cantidad disponible: @product.Inventory.Quantity</p>
-                            }
-                            else
-                            {
-                                <span class="badge bg-danger">Agotado</span>
-                            }
-                        </div>
-                        <div class="card-footer">
-                            <button class="btn btn-primary w-100" @(product.Inventory == null || product.Inventory.Quantity
-                            == 0 ? "disabled" : "")>
-                                Añadir al carrito
-                            </button>
-                            <a href="#" class="btn btn-link text-center d-block mt-2">Vista rápida</a>
+                    <div class="col-12 col-md-3 mb-4">
+                        <div class="card h-100">
+                            <img src="@product.Img" class="card-img-top" alt="@product.Name"
+                                 style="object-fit: cover;">
+                            <div class="card-body">
+                                <h6 class="card-title">@product.Name</h6>
+                                <p class="card-text">S/. @product.Price</p>
+                                <!-- Verificación de stock -->
+                                @if (product.Inventory != null && product.Inventory.Quantity > 0)
+                                {
+                                    <span class="badge bg-success">Disponible</span>
+                                    <p class="mt-2">Cantidad disponible: @product.Inventory.Quantity</p>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">Agotado</span>
+                                }
+                            </div>
+                            <div class="card-footer">
+                                <button class="btn btn-primary w-100" @(product.Inventory == null || product.Inventory.Quantity
+                                == 0 ? "disabled" : "")>
+                                    Añadir al carrito
+                                </button>
+                                <!-- Enlace de Vista rápida actualizado -->
+                                <a asp-action="Details" asp-route-productId="@product.Id" class="btn btn-link text-center d-block mt-2">Vista rápida</a>
+                            </div>
                         </div>
                     </div>
-                </div>
                 }
             </div>
         </div>

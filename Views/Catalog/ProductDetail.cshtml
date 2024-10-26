@@ -1,0 +1,31 @@
+@model freak_store.Models.Product
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <img src="@Model.Img" alt="@Model.Name" class="img-fluid" style="max-height: 400px; object-fit: cover;">
+        </div>
+        <div class="col-md-6">
+            <h2>@Model.Name</h2>
+            <p>@Model.Description</p>
+            <p><strong>Precio:</strong> S/. @Model.Price</p>
+            
+            @if (Model.Discount != null)
+            {
+                <p><strong>Descuento:</strong> @Model.Discount.Percentage%</p>
+            }
+
+            @if (Model.Inventory != null && Model.Inventory.Quantity > 0)
+            {
+                <span class="badge bg-success">Disponible</span>
+                <p>Cantidad disponible: @Model.Inventory.Quantity</p>
+            }
+            else
+            {
+                <span class="badge bg-danger">Agotado</span>
+            }
+
+            <button class="btn btn-primary mt-3">Añadir al carrito</button>
+        </div>
+    </div>
+</div>
