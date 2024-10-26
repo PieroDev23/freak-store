@@ -12,13 +12,17 @@ public class ApplicationDbContext : IdentityDbContext
 
     }
 
-    public DbSet<User> DataUser { get; set; }
+    public DbSet<User> DataUsers { get; set; }  
 
     public DbSet<Category> DataCategories { get; set; }
 
     public DbSet<Discount> DataDiscounts { get; set; }
 
     public DbSet<Inventory> DataInventory { get; set; }
+
+    public DbSet<Contact> DataContact { get; set; }
+
+    public DbSet<Product> DataProducts { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -45,7 +49,9 @@ public class ApplicationDbContext : IdentityDbContext
             .Property(b => b.CreatedAt)
             .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
+        modelBuilder.Entity<Contact>()
+            .Property(b => b.CreatedAt)
+            .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
     }
-
-
 }
