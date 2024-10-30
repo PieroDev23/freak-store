@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using freak_store.Data;
 using freak_store.Services;
 
@@ -24,12 +25,28 @@ builder.Services.AddHttpClient<CheapSharkService>(client =>
     client.DefaultRequestHeaders.Add("User-Agent", "Freak Store");
 });
 
+// Configuración de Swagger
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "API de Freak Store",
+        Version = "v1",
+        Description = "Documentación de la API de Freak Store usando Swagger"
+    });
+});
+
 var app = builder.Build();
 
 // Configuración del pipeline de la aplicación
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "API de Freak Store v1");
+    });
 }
 else
 {
