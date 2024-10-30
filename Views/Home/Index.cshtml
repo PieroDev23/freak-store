@@ -108,11 +108,7 @@
                             }
                         </div>
                         <div class="card-footer">
-                            <button class="btn btn-primary w-100" @(product.Inventory == null || product.Inventory.Quantity
-                            == 0 ? "disabled" : "")>
-                                Añadir al carrito
-                            </button>
-                            <a href="#" class="btn btn-link text-center d-block mt-2">Vista rápida</a>
+                            <a href="/Catalog/Details/@product.Id" class="btn btn-primary w-100">Ver producto</a>
                         </div>
                     </div>
                 </div>

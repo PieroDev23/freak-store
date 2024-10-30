@@ -12,9 +12,10 @@
                 @foreach (var category in ViewBag.Categories)
                 {
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="categoryId" value="@category.Id" 
-                               @(Context.Request.Query.ContainsKey("categoryId") && Context.Request.Query["categoryId"].ToString() == category.Id.ToString() ? "checked" : "") 
-                               id="category@category.Id" />
+                        <input class="form-check-input" type="radio" name="categoryId" value="@category.Id"
+                        @(Context.Request.Query.ContainsKey("categoryId") &&
+                            Context.Request.Query["categoryId"].ToString() == category.Id.ToString() ? "checked" : "")
+                            id="category@category.Id" />
                         <label class="form-check-label" for="category@category.Id">
                             @category.Name
                         </label>
