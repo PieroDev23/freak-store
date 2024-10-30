@@ -1,62 +1,60 @@
 @model IEnumerable<freak_store.Models.Product>
+@{
+    ViewData["Title"] = "Catálogo";
+}
 
-<div class="container mt-4">
-    <div class="row">
-        <!-- Sidebar con categorías -->
-        <div class="col-md-3">
-            <h5>Categorías</h5>
-            <form method="get">
+<div class="row">
+    <!-- Sidebar de categorías -->
+    <div class="col-md-3">
+        <h5>Categorías</h5>
+        <form method="get" action="/Catalog">
+            <div class="list-group">
                 @foreach (var category in ViewBag.Categories)
                 {
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="categoryId" value="@category.Id"
-                            id="category-@category.Id" @(ViewContext.HttpContext.Request.Query["categoryId"] ==
-                        category.Id.ToString() ? "checked" : "") />
-                        <label class="form-check-label" for="category-@category.Id">
+                        @(Context.Request.Query.ContainsKey("categoryId") &&
+                            Context.Request.Query["categoryId"].ToString() == category.Id.ToString() ? "checked" : "")
+                            id="category@category.Id" />
+                        <label class="form-check-label" for="category@category.Id">
                             @category.Name
                         </label>
                     </div>
                 }
-                <button type="submit" class="btn btn-primary mt-2">Filtrar</button>
-            </form>
-        </div>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Filtrar</button>
+        </form>
+    </div>
 
-        <!-- Sección de productos -->
-        <div class="col-md-9">
-            <h5>Productos</h5>
+    <!-- Sección de productos -->
+    <div class="col-md-9">
+        <h3>Productos</h3>
+        @if (!Model.Any())
+        {
+            <p class="text-muted">No se encontraron productos con los criterios de búsqueda.</p>
+        }
+        else
+        {
             <div class="row">
                 @foreach (var product in Model)
                 {
-                    <div class="col-12 col-md-3 mb-4">
+                    <div class="col-md-4 mb-4">
                         <div class="card h-100">
-                            <img src="@product.Img" class="card-img-top" alt="@product.Name"
-                                 style="object-fit: cover;">
+                            <img src="@product.Img" class="card-img-top" alt="@product.Name">
                             <div class="card-body">
-                                <h6 class="card-title">@product.Name</h6>
+                                <h5 class="card-title">@product.Name</h5>
                                 <p class="card-text">S/. @product.Price</p>
-                                <!-- Verificación de stock -->
-                                @if (product.Inventory != null && product.Inventory.Quantity > 0)
-                                {
+                                <p class="card-text">
                                     <span class="badge bg-success">Disponible</span>
-                                    <p class="mt-2">Cantidad disponible: @product.Inventory.Quantity</p>
-                                }
-                                else
-                                {
-                                    <span class="badge bg-danger">Agotado</span>
-                                }
-                            </div>
-                            <div class="card-footer">
-                                <button class="btn btn-primary w-100" @(product.Inventory == null || product.Inventory.Quantity
-                                == 0 ? "disabled" : "")>
-                                    Añadir al carrito
-                                </button>
-                                <!-- Enlace de Vista rápida actualizado -->
-                                <a asp-action="Details" asp-route-productId="@product.Id" class="btn btn-link text-center d-block mt-2">Vista rápida</a>
+                                </p>
+                                <p class="card-text">Cantidad disponible: @product.Inventory.Quantity</p>
+                                <a href="/Catalog/Details/@product.Id" class="btn btn-primary">Añadir al carrito</a>
+                                <a href="/Catalog/Details/@product.Id" class="btn btn-link">Vista rápida</a>
                             </div>
                         </div>
                     </div>
                 }
             </div>
-        </div>
+        }
     </div>
 </div>
