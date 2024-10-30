@@ -6,7 +6,8 @@ using freak_store.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Configuración de la cadena de conexión a PostgreSQL
-var connectionString = builder.Configuration.GetConnectionString("PostgreSQLConnection") ?? throw new InvalidOperationException("Connection string 'PostgreSQLConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("PostgreSQLConnection") 
+    ?? throw new InvalidOperationException("Connection string 'PostgreSQLConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
 
 // Configuración de identidad de ASP.NET Core

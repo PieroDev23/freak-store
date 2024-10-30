@@ -3,6 +3,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using freak_store.ViewModels;
+using System;
 
 namespace freak_store.Services
 {
@@ -23,10 +24,21 @@ namespace freak_store.Services
             if (response.IsSuccessStatusCode)
             {
                 var jsonResponse = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<List<OfferViewModel>>(jsonResponse);
+                try
+                {
+                    return JsonSerializer.Deserialize<List<OfferViewModel>>(jsonResponse);
+                }
+                catch (JsonException ex)
+                {
+                    Console.WriteLine($"Error de deserialización: {ex.Message}");
+                }
+            }
+            else
+            {
+                Console.WriteLine($"Error en la llamada a la API de CheapShark: {response.StatusCode}");
             }
 
-            return new List<OfferViewModel>(); // Retorna lista vacía si falla la llamada a la API
+            return new List<OfferViewModel>();
         }
     }
 }
