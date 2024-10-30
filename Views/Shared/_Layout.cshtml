@@ -10,54 +10,38 @@
 </head>
 <body style="min-height: 100dvh; display: flex; flex-direction: column;">
     <header>
-        <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg" style="background-color: #1d284c;">
+        <!-- Navbar principal -->
+        <nav class="navbar navbar-expand-lg" style="background-color: #1d284c; padding: 10px 20px;">
             <div class="container-fluid">
                 <!-- Logo -->
-                <a class="navbar-brand" href="/">
-                    <img src="https://i.imgur.com/a6arYkc.png" alt="Freak Store Logo" width="50">
-                    FREAK STORE
+                <a class="navbar-brand d-flex align-items-center" href="/">
+                    <img src="https://i.imgur.com/a6arYkc.png" alt="Freak Store Logo" width="40">
+                    <span class="ms-2 text-white" style="font-weight: bold; font-size: 1.25rem;">FREAK STORE</span>
                 </a>
 
-                <form class="d-flex ms-auto">
-                    <input class="form-control me-2" type="search" placeholder="Buscar ..." aria-label="Search">
-                    <button class="btn btn-outline-light" type="submit">Buscar</button>
+                <!-- Barra de búsqueda centralizada -->
+                <form class="d-flex mx-auto" style="width: 50%;">
+                    <input class="form-control" type="search" placeholder="Buscar" aria-label="Search">
+                    <button class="btn" type="submit">
+                        <i class="bi bi-search text-white"></i>
+                    </button>
                 </form>
 
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="tel:970386792">970386792</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="@Url.Action("Index", "Acceso")">
-                            <i class="bi bi-person"></i>
+                <!-- Carrito y Conectar -->
+                <ul class="navbar-nav ms-auto d-flex align-items-center">
+                    <li class="nav-item me-3">
+                        <a class="nav-link text-white d-flex align-items-center" href="#">
+                            <i class="bi bi-cart-fill" style="font-size: 1.25rem;"></i>
+                            <span class="ms-1">0</span> <!-- Aquí podrías insertar la cantidad de productos en el carrito -->
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#"><i class="bi bi-cart"></i></a>
+                        <a class="nav-link text-white d-flex align-items-center" href="@Url.Action("Index", "Acceso")">
+                            <i class="bi bi-person" style="font-size: 1.25rem;"></i>
+                            <span class="ms-1">Conectar</span>
+                        </a>
                     </li>
                 </ul>
-            </div>
-        </nav>
-
-        <!-- Navigation Menu (categorías) -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">PROMOFAST</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <!-- Opciones de menú sin TECLADOS y MOUSE -->
-                        <li class="nav-item">
-                            <a class="nav-link" href="/Catalog">CATÁLOGO</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/Contact">CONTACTO</a>
-                        </li>
-                    </ul>
-                </div>
             </div>
         </nav>
     </header>
