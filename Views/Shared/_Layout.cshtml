@@ -8,40 +8,56 @@
     <link href="~/css/styles.css" rel="stylesheet"> <!-- Enlace al archivo CSS personalizado -->
     <link rel="icon" href="https://i.imgur.com/a6arYkc.png" type="image/x-icon" />
 </head>
-<body style="min-height: 100dvh; display: flex; flex-direction: column;">
+<body style="min-height: 100vh; display: flex; flex-direction: column;">
     <header>
-        <!-- Navbar principal -->
-        <nav class="navbar navbar-expand-lg" style="background-color: #1d284c; padding: 10px 20px;">
+        <!-- Navbar principal con estilo visual actualizado -->
+        <nav class="navbar navbar-expand-lg" style="background-color: #1d284c; padding: 0.5rem 1rem;">
             <div class="container-fluid">
                 <!-- Logo -->
                 <a class="navbar-brand d-flex align-items-center" href="/">
-                    <img src="https://i.imgur.com/a6arYkc.png" alt="Freak Store Logo" width="40">
-                    <span class="ms-2 text-white" style="font-weight: bold; font-size: 1.25rem;">FREAK STORE</span>
+                    <img src="https://i.imgur.com/a6arYkc.png" alt="Freak Store Logo" width="40" class="me-2">
+                    <span class="text-white" style="font-weight: bold;">FREAK STORE</span>
                 </a>
 
-                <!-- Barra de búsqueda centralizada -->
-                <form class="d-flex mx-auto" style="width: 50%;">
-                    <input class="form-control" type="search" placeholder="Buscar" aria-label="Search">
-                    <button class="btn" type="submit">
-                        <i class="bi bi-search text-white"></i>
+                <!-- Barra de búsqueda centrada -->
+                <form class="d-flex mx-auto" style="flex: 1; max-width: 500px;">
+                    <input class="form-control" type="search" placeholder="Buscar ..." aria-label="Search" style="border-radius: 20px 0 0 20px;">
+                    <button class="btn btn-outline-light" type="submit" style="border-radius: 0 20px 20px 0;">
+                        <i class="bi bi-search"></i>
                     </button>
                 </form>
 
-                <!-- Carrito y Conectar -->
+                <!-- Íconos de carrito y perfil alineados a la derecha -->
                 <ul class="navbar-nav ms-auto d-flex align-items-center">
                     <li class="nav-item me-3">
-                        <a class="nav-link text-white d-flex align-items-center" href="#">
-                            <i class="bi bi-cart-fill" style="font-size: 1.25rem;"></i>
-                            <span class="ms-1">0</span> <!-- Aquí podrías insertar la cantidad de productos en el carrito -->
-                        </a>
+                        <a class="nav-link text-white" href="#"><i class="bi bi-cart"></i> <span>0</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white d-flex align-items-center" href="@Url.Action("Index", "Acceso")">
-                            <i class="bi bi-person" style="font-size: 1.25rem;"></i>
-                            <span class="ms-1">Conectar</span>
-                        </a>
+                        <a class="nav-link text-white" href="@Url.Action("Index", "Acceso")"><i class="bi bi-person"></i> Conectar</a>
                     </li>
                 </ul>
+            </div>
+        </nav>
+
+        <!-- Segunda barra de navegación con categorías -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Catalog">CATÁLOGO</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Contact">CONTACTO</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/CheapShark">CHEAP SHARK</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
     </header>
