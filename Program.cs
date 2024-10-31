@@ -7,7 +7,7 @@ using freak_store.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Configuración de la cadena de conexión a PostgreSQL
-var connectionString = builder.Configuration.GetConnectionString("PostgreSQLConnection") 
+var connectionString = builder.Configuration.GetConnectionString("PostgreSQLConnection")
     ?? throw new InvalidOperationException("Connection string 'PostgreSQLConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
 
@@ -17,13 +17,6 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 
 // Agrega servicios de Razor Pages y MVC
 builder.Services.AddControllersWithViews();
-
-// Configuración del servicio CheapShark con HttpClient y headers personalizados
-builder.Services.AddHttpClient<CheapSharkService>(client =>
-{
-    client.DefaultRequestHeaders.Add("Accept", "application/json");
-    client.DefaultRequestHeaders.Add("User-Agent", "Freak Store");
-});
 
 // Configuración de Swagger
 builder.Services.AddSwaggerGen(c =>
@@ -36,6 +29,13 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+// Configuración del servicio CheapShark con HttpClient y headers personalizados
+builder.Services.AddHttpClient<CheapSharkService>(client =>
+{
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
+    client.DefaultRequestHeaders.Add("User-Agent", "Freak Store");
+});
+
 var app = builder.Build();
 
 // Configuración del pipeline de la aplicación
@@ -46,6 +46,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "API de Freak Store v1");
+        c.RoutePrefix = "swagger";
     });
 }
 else

@@ -1,38 +1,34 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Net.Http;
-using System.Text.Json;
+using freak_store.Services;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 
 namespace freak_store.Controllers
 {
-    public class CheapSharkController : Controller
+    [ApiController] // Marca este controlador como API
+    [Route("api/[controller]")] // Define una ruta base para el controlador
+    public class CheapSharkController : ControllerBase
     {
-        private readonly HttpClient _httpClient;
+        private readonly CheapSharkService _cheapSharkService;
 
-        public CheapSharkController(HttpClient httpClient)
+        public CheapSharkController(CheapSharkService cheapSharkService)
         {
-            _httpClient = httpClient;
+            _cheapSharkService = cheapSharkService;
         }
 
-        public async Task<IActionResult> Index()
+        /// <summary>
+        /// Obtiene una lista de ofertas desde CheapShark.
+        /// </summary>
+        /// <remarks>
+        /// Este método realiza una llamada a la API externa de CheapShark para obtener ofertas de juegos.
+        /// </remarks>
+        /// <returns>Una lista de ofertas disponibles en CheapShark.</returns>
+        /// <response code="200">Retorna una lista de ofertas con éxito.</response>
+        /// <response code="500">Error interno del servidor.</response>
+        [HttpGet("offers")] // Define una ruta específica para este método
+        public async Task<IActionResult> GetOffers()
         {
-            var featuredProducts = await GetCheapSharkOffers();
-            return View(featuredProducts);
-        }
-
-        private async Task<List<Dictionary<string, object>>> GetCheapSharkOffers()
-        {
-            string apiUrl = "https://www.cheapshark.com/api/1.0/deals?storeID=1&upperPrice=15";
-            var response = await _httpClient.GetAsync(apiUrl);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var jsonResponse = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<List<Dictionary<string, object>>>(jsonResponse);
-            }
-
-            return new List<Dictionary<string, object>>(); // Retorna lista vacía si falla la llamada a la API
+            var offers = await _cheapSharkService.GetCheapSharkOffers();
+            return Ok(offers);
         }
     }
 }
