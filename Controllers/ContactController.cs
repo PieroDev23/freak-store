@@ -1,6 +1,7 @@
 using freak_store.Data;
 using freak_store.Models;
 using Microsoft.AspNetCore.Mvc;
+using MLSentymentalAnalysis;
 
 namespace freak_store.Controllers
 {
@@ -28,6 +29,46 @@ namespace freak_store.Controllers
                 TempData["ErrorMessage"] = "Hubo errores al enviar el formulario";
                 return RedirectToAction("Index");
             }
+            MLModelTextClassification.ModelInput sampleData = new MLModelTextClassification.ModelInput()
+            {
+                Comentario = model.Message
+            };
+            
+            MLModelTextClassification.ModelOutput output = MLModelTextClassification.Predict(sampleData);
+  
+            //Console.WriteLine($"{output.Label}{output.PredictedLabel}");
+
+            //output.Score.ToList().ForEach(score => Console.WriteLine(score));
+
+            var sortedScoresWithLabel = MLModelTextClassification.PredictAllLabels(sampleData);
+            var scoreKeyFirst = sortedScoresWithLabel.ToList()[0].Key;
+            var scoreValueFirst = sortedScoresWithLabel.ToList()[0].Value;
+            var scoreKeySecond = sortedScoresWithLabel.ToList()[1].Key;
+            var scoreValueSecond = sortedScoresWithLabel.ToList()[1].Value;
+
+            if(scoreKeyFirst == "1")
+            {
+                if(scoreValueFirst > 0.5)
+                {
+                    model.Message = "Positivo";
+                }
+                else
+                {
+                    model.Message = "Negativo";
+                }
+            }else{
+                if(scoreValueFirst > 0.5)
+                {
+                    model.Message = "Negativo";
+                }
+                else
+                {
+                    model.Message = "Positivo";
+                }
+            }
+            
+            Console.WriteLine($"{scoreKeyFirst,-40}{scoreValueFirst,-20}");
+            Console.WriteLine($"{scoreKeySecond,-40}{scoreValueSecond,-20}");
 
             TempData["SuccessMessage"] = "¡Gracias por enviarnos un mensaje, nosotros nos pondremos en contacto contigo!";
 
