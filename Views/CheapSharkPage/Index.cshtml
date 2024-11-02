@@ -1,0 +1,36 @@
+@model List<Dictionary<string, object>>
+
+<h1 class="text-center mb-4">Juegos más baratos - colaboración con CheapShark!</h1>
+
+@if (Model.Any())
+{
+    <div class="container mt-6">
+        <div class="row">
+            @foreach (var featuredProduct in Model)
+            {
+                <div class="col-14 col-md-3 mb-4">
+                    <div class="card h-102">
+                        <img src="@featuredProduct["thumb"]" class="card-img-top" alt="@featuredProduct["title"]"
+                            style="max-height: 198px; object-fit: cover;">
+                        <div class="card-body">
+                            <h5 class="card-title">@featuredProduct["title"]</h5>
+                            <p class="card-text">Precio: $@featuredProduct["salePrice"]</p>
+                            <p class="card-text"><small class="text-muted">Precio normal:
+                                    $@featuredProduct["normalPrice"]</small></p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="https://www.cheapshark.com/redirect?dealID=@featuredProduct["dealID"]" target="_blank"
+                                class="btn btn-primary w-102">
+                                Ver oferta
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+else
+{
+    <p class="text-center">No se encontraron ofertas en este momento.</p>
+}

@@ -15,25 +15,26 @@
                     <form asp-action="SubmitContactForm" asp-controller="Contact">
                         <div class="mb-3">
                             <label for="Name" class="form-label">Nombre</label>
-                            <input asp-for="Name" class="form-control" placeholder="Ingresa tu nombre">
+                            <input asp-for="Name" class="form-control" placeholder="Ingresa tu nombre" required
+                                pattern=".{1,}" title="Por favor ingresa tu nombre.">
                         </div>
 
                         <div class="mb-3">
                             <label for="Email" class="form-label">Correo Electrónico</label>
-                            <input asp-for="Email" class="form-control" placeholder="Ingresa tu correo electrónico">
+                            <input asp-for="Email" class="form-control" placeholder="Ingresa tu correo electrónico"
+                                required type="email" title="Por favor ingresa un correo electrónico válido.">
                         </div>
 
                         <div class="mb-3">
                             <label for="Subject" class="form-label">Asunto</label>
-                            <input asp-for="Subject" class="form-control" placeholder="Motivo del contacto">
-
+                            <input asp-for="Subject" class="form-control" placeholder="Motivo del contacto" required
+                                pattern=".{1,}" title="Por favor ingresa un asunto.">
                         </div>
 
                         <div class="mb-3">
                             <label for="Message" class="form-label">Mensaje</label>
-                            <textarea asp-for="Message" class="form-control" rows="5"
-                                placeholder="Escribe tu mensaje"></textarea>
-
+                            <textarea asp-for="Message" class="form-control" rows="5" placeholder="Escribe tu mensaje"
+                                required pattern=".{1,}" title="Por favor ingresa tu mensaje."></textarea>
                         </div>
 
                         <div class="text-center mb-5">

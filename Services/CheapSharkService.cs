@@ -16,7 +16,7 @@ namespace freak_store.Services
             _httpClient = httpClient;
         }
 
-        public async Task<List<OfferViewModel>> GetCheapSharkOffers()
+        public async Task<List<Dictionary<string, object>>> GetCheapSharkOffers()
         {
             string apiUrl = "https://www.cheapshark.com/api/1.0/deals?storeID=1&upperPrice=15";
             var response = await _httpClient.GetAsync(apiUrl);
@@ -26,7 +26,7 @@ namespace freak_store.Services
                 var jsonResponse = await response.Content.ReadAsStringAsync();
                 try
                 {
-                    return JsonSerializer.Deserialize<List<OfferViewModel>>(jsonResponse);
+                    return JsonSerializer.Deserialize<List<Dictionary<string, object>>>(jsonResponse)!;
                 }
                 catch (JsonException ex)
                 {
@@ -38,7 +38,7 @@ namespace freak_store.Services
                 Console.WriteLine($"Error en la llamada a la API de CheapShark: {response.StatusCode}");
             }
 
-            return new List<OfferViewModel>();
+            return [];
         }
     }
 }

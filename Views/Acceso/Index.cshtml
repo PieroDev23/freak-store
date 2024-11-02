@@ -1,106 +1,52 @@
-@model freak_store.Models.User
 @{
-    ViewData["Title"] = "Login";
-    Layout = null;
+    ViewData["Title"] = "Conectar";
 }
 
+<div class="login-container d-flex justify-content-center align-items-center" style="min-height: 80vh; background-color: #ffffff; padding-top: 50px; padding-bottom: 50px;">
+    <div class="login-box p-4" style="background-color: #232c3b; border-radius: 8px; max-width: 400px; width: 100%;">
+        <ul class="nav nav-tabs justify-content-center mb-4" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active tab-button" id="login-tab" data-bs-toggle="tab" data-bs-target="#login" type="button" role="tab" aria-controls="login" aria-selected="true">Conectar</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link tab-button" id="register-tab" data-bs-toggle="tab" data-bs-target="#register" type="button" role="tab" aria-controls="register" aria-selected="false">Registrarte</button>
+            </li>
+        </ul>
 
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - freak_store</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/freak_store.styles.css" asp-append-version="true" />
-
-    <style>
-        body {
-            background-color: #1D284C;
-            /* Color de fondo */
-        }
-
-        .login-container {
-            width: 548px;
-            max-width: 90%;
-            /* Ancho máximo del cuadro */
-            /* Centra el cuadro en la pantalla */
-            padding: 20px;
-            /* Espaciado interno */
-            background-color: white;
-            /* Color de fondo del cuadro */
-            border-radius: 8px;
-            /* Bordes redondeados */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            /* Sombra suave */
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-            /* Espaciado entre grupos de formulario */
-        }
-
-        .form-control {
-            background-color: #f2f2f2;
-            /* Color de fondo de los campos */
-            border: 1px solid #ccc;
-            /* Borde del campo */
-            border-radius: 4px;
-            /* Bordes redondeados */
-        }
-
-        .btn-primary {
-            background-color: #007bff;
-            /* Color de fondo del botón */
-            border-color: #007bff;
-            /* Color del borde del botón */
-            border-radius: 4px;
-            /* Bordes redondeados del botón */
-        }
-
-        .btn-primary:hover {
-            background-color: #0056b3;
-            /* Color de fondo del botón al pasar el mouse */
-            border-color: #0056b3;
-            /* Color del borde del botón al pasar el mouse */
-        }
-    </style>
-</head>
-
-<body style="height: 100dvh; display: flex; justify-content: center; align-items: center; flex-direction: column;">
-    <img src="https://i.imgur.com/a6arYkc.png" alt="">
-    <div class="login-container mt-5">
-
-        <h2 class="text-center">Iniciar Sesión</h2>
-        <form asp-controller="Acceso" asp-action="InicioSesion" method="post"
-            class="d-flex flex-column gap-3 px-5 pb-5 pt-3">
-            <div class="form-group ">
-                <input asp-for="Username" class="form-control" placeholder="Usuario" required
-                    style="background-color: #D9D9D9 !important;" />
-                <span asp-validation-for="Username" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input asp-for="Password" type="password" class="form-control" placeholder="Contraseña"
-                    style="background-color: #D9D9D9 !important;" required />
-                <span asp-validation-for="Password" class="text-danger"></span>
+        <div class="tab-content" id="myTabContent">
+            <!-- Formulario de inicio de sesión -->
+            <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
+                <form id="loginForm" method="post" asp-action="Login" asp-controller="Acceso">
+                    <div class="mb-3">
+                        <label for="email" class="form-label text-white">* Email</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" required style="border-radius: 4px;">
+                        <div class="invalid-feedback">Por favor ingresa un email válido.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label text-white">* Contraseña</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" required style="border-radius: 4px;" minlength="6">
+                        <div class="invalid-feedback">La contraseña debe tener al menos 6 caracteres.</div>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100" style="background-color: #1da1f2; border: none; border-radius: 4px;">ENTRAR</button>
+                </form>
             </div>
 
-            @if (ViewBag.Error != null)
-            {
-                <div class="alert alert-danger">
-                    @ViewBag.Error
-                </div>
-            }
-            <button type="submit" class="btn btn-primary btn-block"
-                style="background-color: #171384; border: unset;">Comenzar</button>
-        </form>
+            <!-- Formulario de registro -->
+            <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
+                <form id="registerForm" method="post" asp-action="Register" asp-controller="Acceso">
+                    <div class="mb-3">
+                        <label for="register-email" class="form-label text-white">* Email</label>
+                        <input type="email" class="form-control" id="register-email" name="email" placeholder="Email" required style="border-radius: 4px;">
+                        <div class="invalid-feedback">Por favor ingresa un email válido.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="register-password" class="form-label text-white">* Contraseña</label>
+                        <input type="password" class="form-control" id="register-password" name="password" placeholder="Contraseña" required style="border-radius: 4px;" minlength="6">
+                        <div class="invalid-feedback">La contraseña debe tener al menos 6 caracteres.</div>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100" style="background-color: #1da1f2; border: none; border-radius: 4px;">REGISTRARSE</button>
+                </form>
+            </div>
+        </div>
     </div>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-</body>
-
-</html>
+</div>

@@ -1,7 +1,4 @@
-﻿/* Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
-
-a.navbar-brand {
+﻿a.navbar-brand {
   white-space: normal;
   text-align: center;
   word-break: break-all;
@@ -45,4 +42,78 @@ button.accept-policy {
   width: 100%;
   white-space: nowrap;
   line-height: 60px;
+}
+
+/* Fondo blanco y centrar tarjeta de login/registro */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 100px); /* Ajusta la altura excluyendo header y footer */
+  background-color: #ffffff;
+  padding: 20px; /* Espacio adicional para pantallas pequeñas */
+}
+
+/* Estilos de la tarjeta de login */
+.card-login {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  background-color: #1d284c; /* Color de fondo de la tarjeta */
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  color: white;
+  margin: auto; /* Centrado automático */
+}
+
+/* Estilos de las pestañas */
+.nav-tabs .nav-link {
+  color: #d1d1d1;
+  font-weight: bold;
+  border: none;
+}
+
+.nav-tabs .nav-link.active {
+  color: #ffffff;
+  background-color: #232c3b;
+  border: none;
+  border-bottom: 2px solid #1da1f2;
+}
+
+.tab-button {
+  background-color: transparent;
+  border: none;
+}
+
+.tab-button:focus {
+  outline: none;
+}
+
+/* Estilos de entrada */
+.card-login .form-control {
+  background-color: #2b3a4b;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+}
+
+.card-login .form-control::placeholder {
+  color: #ffffff;
+}
+
+.card-login .btn-primary {
+  background-color: #1da1f2;
+  border: none;
+  width: 100%; /* Botón de ancho completo */
+}
+
+.card-login a {
+  color: #1da1f2;
+}
+
+/* Ajustes en el pie de la tarjeta */
+.login-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
 }

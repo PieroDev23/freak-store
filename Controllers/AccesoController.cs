@@ -1,55 +1,67 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using freak_store.Models;
-using freak_store.Data;
+using System.Threading.Tasks;
+using freak_store.ViewModels;
 
 namespace freak_store.Controllers
 {
     public class AccesoController : Controller
     {
-        private readonly ILogger<AccesoController> _logger;
-        private readonly ApplicationDbContext _context; // Inyección de dependencias para el contexto
+        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public AccesoController(ILogger<AccesoController> logger, ApplicationDbContext context)
+        public AccesoController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
         {
-            _logger = logger;
-            _context = context;
+            _signInManager = signInManager;
+            _userManager = userManager;
         }
 
-        // Acción para mostrar la vista de Login
+        // Vista de Login/Registro
         public IActionResult Index()
         {
             return View();
         }
 
-        // Acción para manejar la autenticación del usuario
+        // Procesa el inicio de sesión
         [HttpPost]
-        public IActionResult InicioSesion(User model)
+        public async Task<IActionResult> Login(string email, string password)
         {
-
-            _logger.LogInformation($"Username: {model.Username}");
-            _logger.LogInformation($"Phone: {model.Password}");
-
-            // Validar usuario en la base de datos con el modelo correcto
-            var user = _context.DataUsers.FirstOrDefault(x => x.Username == model.Username && x.Password == model.Password);
-            if (user != null)
+            var result = await _signInManager.PasswordSignInAsync(email, password, isPersistent: false, lockoutOnFailure: false);
+            if (result.Succeeded)
             {
-                // Si el usuario existe, autenticación exitosa
-                return RedirectToAction("Index", "Home"); // Redirige a la página principal
-            }
-            else
-            {
-                // Si el usuario no es encontrado, mostrar mensaje de error
-                ViewBag.Error = "Usuario o contraseña incorrectos";
+                return RedirectToAction("Index", "Home");
             }
 
-            // Si algo falla, devolver la vista de login con el mensaje de error
+            ModelState.AddModelError(string.Empty, "Inicio de sesión no válido.");
             return View("Index");
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        // Procesa el registro de un nuevo usuario
+        [HttpPost]
+        public async Task<IActionResult> Register(string email, string password)
         {
-            return View("Error!");
+            var user = new IdentityUser { UserName = email, Email = email };
+            var result = await _userManager.CreateAsync(user, password);
+
+            if (result.Succeeded)
+            {
+                await _signInManager.SignInAsync(user, isPersistent: false);
+                return RedirectToAction("Index", "Home");
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+            
+            return View("Index");
+        }
+
+        // Cerrar sesión
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
     }
 }
