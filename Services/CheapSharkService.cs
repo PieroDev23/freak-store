@@ -2,8 +2,6 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using freak_store.ViewModels;
-using System;
 
 namespace freak_store.Services
 {
@@ -16,7 +14,7 @@ namespace freak_store.Services
             _httpClient = httpClient;
         }
 
-        public async Task<List<OfferViewModel>> GetCheapSharkOffers()
+        public async Task<List<Dictionary<string, string>>> GetCheapSharkOffers()
         {
             string apiUrl = "https://www.cheapshark.com/api/1.0/deals?storeID=1&upperPrice=15";
             var response = await _httpClient.GetAsync(apiUrl);
@@ -24,21 +22,10 @@ namespace freak_store.Services
             if (response.IsSuccessStatusCode)
             {
                 var jsonResponse = await response.Content.ReadAsStringAsync();
-                try
-                {
-                    return JsonSerializer.Deserialize<List<OfferViewModel>>(jsonResponse);
-                }
-                catch (JsonException ex)
-                {
-                    Console.WriteLine($"Error de deserialización: {ex.Message}");
-                }
-            }
-            else
-            {
-                Console.WriteLine($"Error en la llamada a la API de CheapShark: {response.StatusCode}");
+                return JsonSerializer.Deserialize<List<Dictionary<string, string>>>(jsonResponse);
             }
 
-            return new List<OfferViewModel>();
+            return new List<Dictionary<string, string>>(); // Retorna lista vacía si falla la llamada a la API
         }
     }
 }
