@@ -4,6 +4,17 @@
 
 <div class="login-container d-flex justify-content-center align-items-center" style="min-height: 80vh; background-color: #ffffff; padding-top: 50px; padding-bottom: 50px;">
     <div class="login-box p-4" style="background-color: #232c3b; border-radius: 8px; max-width: 400px; width: 100%;">
+        
+        <!-- Mostrar mensaje de éxito o error si existe -->
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success text-center">@TempData["SuccessMessage"]</div>
+        }
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger text-center">@TempData["ErrorMessage"]</div>
+        }
+
         <ul class="nav nav-tabs justify-content-center mb-4" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active tab-button" id="login-tab" data-bs-toggle="tab" data-bs-target="#login" type="button" role="tab" aria-controls="login" aria-selected="true">Conectar</button>
@@ -34,6 +45,26 @@
             <!-- Formulario de registro -->
             <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
                 <form id="registerForm" method="post" asp-action="Register" asp-controller="Acceso">
+                    <div class="mb-3">
+                        <label for="register-username" class="form-label text-white">* Nombre de usuario</label>
+                        <input type="text" class="form-control" id="register-username" name="username" placeholder="Nombre de usuario" required style="border-radius: 4px;">
+                        <div class="invalid-feedback">Por favor ingresa un nombre de usuario.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="register-firstname" class="form-label text-white">* Nombre</label>
+                        <input type="text" class="form-control" id="register-firstname" name="firstname" placeholder="Nombre" required style="border-radius: 4px;">
+                        <div class="invalid-feedback">Por favor ingresa tu nombre.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="register-lastname" class="form-label text-white">* Apellido</label>
+                        <input type="text" class="form-control" id="register-lastname" name="lastname" placeholder="Apellido" required style="border-radius: 4px;">
+                        <div class="invalid-feedback">Por favor ingresa tu apellido.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="register-phone" class="form-label text-white">* Teléfono</label>
+                        <input type="tel" class="form-control" id="register-phone" name="phone" placeholder="Número de teléfono" required style="border-radius: 4px;">
+                        <div class="invalid-feedback">Por favor ingresa un número de teléfono válido.</div>
+                    </div>
                     <div class="mb-3">
                         <label for="register-email" class="form-label text-white">* Email</label>
                         <input type="email" class="form-control" id="register-email" name="email" placeholder="Email" required style="border-radius: 4px;">

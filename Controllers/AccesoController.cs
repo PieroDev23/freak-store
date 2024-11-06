@@ -2,6 +2,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using freak_store.ViewModels;
+using freak_store.Models;
+using freak_store.Data;
+using System;
 
 namespace freak_store.Controllers
 {
@@ -9,11 +12,13 @@ namespace freak_store.Controllers
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly ApplicationDbContext _context;
 
-        public AccesoController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
+        public AccesoController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, ApplicationDbContext context)
         {
             _signInManager = signInManager;
             _userManager = userManager;
+            _context = context;
         }
 
         // Vista de Login/Registro
@@ -22,46 +27,34 @@ namespace freak_store.Controllers
             return View();
         }
 
-        // Procesa el inicio de sesión
-        [HttpPost]
-        public async Task<IActionResult> Login(string email, string password)
-        {
-            var result = await _signInManager.PasswordSignInAsync(email, password, isPersistent: false, lockoutOnFailure: false);
-            if (result.Succeeded)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            ModelState.AddModelError(string.Empty, "Inicio de sesión no válido.");
-            return View("Index");
-        }
-
         // Procesa el registro de un nuevo usuario
         [HttpPost]
-        public async Task<IActionResult> Register(string email, string password)
+        public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            var user = new IdentityUser { UserName = email, Email = email };
-            var result = await _userManager.CreateAsync(user, password);
-
-            if (result.Succeeded)
+            if (ModelState.IsValid)
             {
-                await _signInManager.SignInAsync(user, isPersistent: false);
+                // Crear instancia de `User` con datos del ViewModel
+                var newUser = new User
+                {
+                    Firstname = model.FirstName,
+                    Lastname = model.LastName,
+                    Phone = model.Phone,
+                    Username = model.Username,
+                    Email = model.Email,
+                    Password = model.Password, // Hash la contraseña en producción
+                    CreatedAt = DateTime.Now
+                };
+
+                // Agregar el nuevo usuario a la base de datos
+                _context.DataUsers.Add(newUser);
+                await _context.SaveChangesAsync();
+
+                TempData["SuccessMessage"] = "Registro exitoso. Bienvenido!";
                 return RedirectToAction("Index", "Home");
             }
 
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError(string.Empty, error.Description);
-            }
-            
+            TempData["ErrorMessage"] = "No se pudo completar el registro. Verifica los datos e intenta nuevamente.";
             return View("Index");
-        }
-
-        // Cerrar sesión
-        public async Task<IActionResult> Logout()
-        {
-            await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
         }
     }
 }
