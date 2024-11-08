@@ -16,7 +16,7 @@
             <h4 class="text-muted">S/. @Model.Price</h4>
             
             <p>
-                @if (Model.Inventory.Quantity > 0)
+                @if (Model.Inventory != null && Model.Inventory.Quantity > 0)
                 {
                     <span class="badge bg-success">Disponible</span>
                 }
@@ -25,7 +25,7 @@
                     <span class="badge bg-danger">Agotado</span>
                 }
             </p>
-            <p>Cantidad disponible: @Model.Inventory.Quantity</p>
+            <p>Cantidad disponible: @(Model.Inventory?.Quantity ?? 0)</p>
             
             <hr>
             

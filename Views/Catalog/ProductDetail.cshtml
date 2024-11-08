@@ -18,7 +18,7 @@
             @if (Model.Inventory != null && Model.Inventory.Quantity > 0)
             {
                 <span class="badge bg-success">Disponible</span>
-                <p>Cantidad disponible: @Model.Inventory.Quantity</p>
+                <p>Cantidad disponible: @(Model.Inventory?.Quantity ?? 0)</p>
             }
             else
             {

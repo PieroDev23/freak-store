@@ -45,9 +45,11 @@
                                 <h5 class="card-title">@product.Name</h5>
                                 <p class="card-text">S/. @product.Price</p>
                                 <p class="card-text">
-                                    <span class="badge bg-success">Disponible</span>
+                                    <span class="badge @(product.Inventory != null && product.Inventory.Quantity > 0 ? "bg-success" : "bg-danger")">
+                                        @(product.Inventory != null && product.Inventory.Quantity > 0 ? "Disponible" : "Agotado")
+                                    </span>
                                 </p>
-                                <p class="card-text">Cantidad disponible: @product.Inventory.Quantity</p>
+                                <p class="card-text">Cantidad disponible: @(product.Inventory?.Quantity ?? 0)</p>
                                 <a href="/Catalog/Details/@product.Id" class="btn btn-primary">Añadir al carrito</a>
                                 <a href="/Catalog/Details/@product.Id" class="btn btn-link">Vista rápida</a>
                             </div>
