@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using freak_store.Data;
 using freak_store.Models;
+using Microsoft.AspNetCore.Identity;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace freak_store.Controllers
@@ -9,10 +11,12 @@ namespace freak_store.Controllers
     public class AccesoController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly SignInManager<IdentityUser> _signInManager;
 
-        public AccesoController(ApplicationDbContext context)
+        public AccesoController(ApplicationDbContext context, SignInManager<IdentityUser> signInManager)
         {
             _context = context;
+            _signInManager = signInManager;
         }
 
         // Acción para mostrar la vista de inicio de sesión y registro
@@ -28,7 +32,6 @@ namespace freak_store.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Crear un nuevo usuario con los datos del formulario de registro
                 var newUser = new User
                 {
                     Firstname = first_name,
@@ -40,19 +43,43 @@ namespace freak_store.Controllers
                     CreatedAt = DateTime.UtcNow
                 };
 
-                // Agregar el usuario a la base de datos
                 _context.DataUsers.Add(newUser);
                 await _context.SaveChangesAsync();
 
-                // Mensaje de éxito temporal para mostrar en la vista de inicio de sesión
                 TempData["SuccessMessage"] = "Registro exitoso. Ahora puedes iniciar sesión.";
-
-                // Redirigir al formulario de inicio de sesión tras el registro exitoso
                 return RedirectToAction("Index", "Acceso");
             }
 
-            // Si el modelo no es válido, recargar la vista de registro con errores
             return View("Index");
+        }
+
+        // Acción para manejar el inicio de sesión
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(string email, string password)
+        {
+            var user = _context.DataUsers.FirstOrDefault(u => u.Email == email && u.Password == password);
+            if (user != null)
+            {
+                // Configura el nombre de usuario en la identidad para mostrar en el encabezado
+                var identityUser = new IdentityUser { UserName = user.Username, NormalizedUserName = user.Username };
+                await _signInManager.SignInAsync(identityUser, isPersistent: false);
+
+                // Redirige a la página principal
+                return RedirectToAction("Index", "Home");
+            }
+
+            TempData["ErrorMessage"] = "Email o contraseña incorrectos. Inténtalo de nuevo.";
+            return RedirectToAction("Index", "Acceso");
+        }
+
+        // Acción para manejar el cierre de sesión
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
     }
 }
