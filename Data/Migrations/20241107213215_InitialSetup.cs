@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace freak_store.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialSetup : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -65,6 +65,23 @@ namespace freak_store.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_categories", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "contacts",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    name = table.Column<string>(type: "text", nullable: true),
+                    email = table.Column<string>(type: "text", nullable: true),
+                    subject = table.Column<string>(type: "text", nullable: true),
+                    message = table.Column<string>(type: "text", nullable: true),
+                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    updated_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_contacts", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -329,6 +346,9 @@ namespace freak_store.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "contacts");
 
             migrationBuilder.DropTable(
                 name: "products");

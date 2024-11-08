@@ -12,8 +12,8 @@ using freak_store.Data;
 namespace freak_store.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241004052547_CreatingContactTable")]
-    partial class CreatingContactTable
+    [Migration("20241107213215_InitialSetup")]
+    partial class InitialSetup
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

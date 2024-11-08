@@ -1,67 +1,58 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using freak_store.Data;
+using freak_store.Models;
+using System;
 using System.Threading.Tasks;
-using freak_store.ViewModels;
 
 namespace freak_store.Controllers
 {
     public class AccesoController : Controller
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly ApplicationDbContext _context;
 
-        public AccesoController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
+        public AccesoController(ApplicationDbContext context)
         {
-            _signInManager = signInManager;
-            _userManager = userManager;
+            _context = context;
         }
 
-        // Vista de Login/Registro
+        // Acción para mostrar la vista de inicio de sesión y registro
         public IActionResult Index()
         {
             return View();
         }
 
-        // Procesa el inicio de sesión
+        // Acción para manejar el registro de usuario
         [HttpPost]
-        public async Task<IActionResult> Login(string email, string password)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(string first_name, string last_name, string username, string email, string password, int phone)
         {
-            var result = await _signInManager.PasswordSignInAsync(email, password, isPersistent: false, lockoutOnFailure: false);
-            if (result.Succeeded)
+            if (ModelState.IsValid)
             {
-                return RedirectToAction("Index", "Home");
+                // Crear un nuevo usuario con los datos del formulario de registro
+                var newUser = new User
+                {
+                    Firstname = first_name,
+                    Lastname = last_name,
+                    Username = username,
+                    Email = email,
+                    Password = password, // En producción, asegúrate de encriptar la contraseña
+                    Phone = phone,
+                    CreatedAt = DateTime.UtcNow
+                };
+
+                // Agregar el usuario a la base de datos
+                _context.DataUsers.Add(newUser);
+                await _context.SaveChangesAsync();
+
+                // Mensaje de éxito temporal para mostrar en la vista de inicio de sesión
+                TempData["SuccessMessage"] = "Registro exitoso. Ahora puedes iniciar sesión.";
+
+                // Redirigir al formulario de inicio de sesión tras el registro exitoso
+                return RedirectToAction("Index", "Acceso");
             }
 
-            ModelState.AddModelError(string.Empty, "Inicio de sesión no válido.");
+            // Si el modelo no es válido, recargar la vista de registro con errores
             return View("Index");
-        }
-
-        // Procesa el registro de un nuevo usuario
-        [HttpPost]
-        public async Task<IActionResult> Register(string email, string password)
-        {
-            var user = new IdentityUser { UserName = email, Email = email };
-            var result = await _userManager.CreateAsync(user, password);
-
-            if (result.Succeeded)
-            {
-                await _signInManager.SignInAsync(user, isPersistent: false);
-                return RedirectToAction("Index", "Home");
-            }
-
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError(string.Empty, error.Description);
-            }
-            
-            return View("Index");
-        }
-
-        // Cerrar sesión
-        public async Task<IActionResult> Logout()
-        {
-            await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
         }
     }
 }
