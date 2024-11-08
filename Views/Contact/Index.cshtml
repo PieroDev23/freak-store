@@ -1,7 +1,7 @@
 @model Contact
 
 @{
-    ViewData["Title"] = "Contact page";
+    ViewData["Title"] = "Formulario de Contacto";
 }
 
 <div class="container mt-5">
@@ -12,7 +12,24 @@
                     <h2>Formulario de Contacto</h2>
                 </div>
                 <div class="card-body">
-                    <form asp-action="SubmitContactForm" asp-controller="Contact">
+
+                    <!-- Mensajes de éxito o error -->
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger" role="alert">
+                            @TempData["ErrorMessage"]
+                        </div>
+                    }
+
+                    @if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success" role="alert">
+                            @TempData["SuccessMessage"]
+                        </div>
+                    }
+
+                    <!-- Formulario de contacto -->
+                    <form asp-action="SubmitContactForm" asp-controller="Contact" method="post">
                         <div class="mb-3">
                             <label for="Name" class="form-label">Nombre</label>
                             <input asp-for="Name" class="form-control" placeholder="Ingresa tu nombre" required
@@ -37,24 +54,10 @@
                                 required pattern=".{1,}" title="Por favor ingresa tu mensaje."></textarea>
                         </div>
 
-                        <div class="text-center mb-5">
+                        <div class="text-center mb-3">
                             <button type="submit" class="btn btn-primary text-white text-uppercase"
-                                style="background-color:  #171384">Enviar</button>
+                                style="background-color: #171384;">Enviar</button>
                         </div>
-
-                        @if (TempData["ErrorMessage"] != null)
-                        {
-                            <div class="alert alert-danger" role="alert">
-                                @TempData["ErrorMessage"]
-                            </div>
-                        }
-
-                        @if (TempData["SuccessMessage"] != null)
-                        {
-                            <div class="alert alert-success" role="alert">
-                                @TempData["SuccessMessage"]
-                            </div>
-                        }
                     </form>
                 </div>
             </div>

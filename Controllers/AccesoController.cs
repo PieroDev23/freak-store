@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Mvc;
 using freak_store.Data;
 using freak_store.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -47,6 +47,7 @@ namespace freak_store.Controllers
                 await _context.SaveChangesAsync();
 
                 TempData["SuccessMessage"] = "Registro exitoso. Ahora puedes iniciar sesión.";
+                TempData.Keep("SuccessMessage"); // Mantener el mensaje hasta que se lea en la vista de acceso
                 return RedirectToAction("Index", "Acceso");
             }
 
@@ -61,15 +62,14 @@ namespace freak_store.Controllers
             var user = _context.DataUsers.FirstOrDefault(u => u.Email == email && u.Password == password);
             if (user != null)
             {
-                // Configura el nombre de usuario en la identidad para mostrar en el encabezado
                 var identityUser = new IdentityUser { UserName = user.Username, NormalizedUserName = user.Username };
                 await _signInManager.SignInAsync(identityUser, isPersistent: false);
 
-                // Redirige a la página principal
                 return RedirectToAction("Index", "Home");
             }
 
             TempData["ErrorMessage"] = "Email o contraseña incorrectos. Inténtalo de nuevo.";
+            TempData.Keep("ErrorMessage"); // Mantener el mensaje hasta que se lea en la vista de acceso
             return RedirectToAction("Index", "Acceso");
         }
 
