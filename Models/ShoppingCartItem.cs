@@ -4,23 +4,24 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace freak_store.Models
 {
-    [Table("shopping_cart_item")]
+    [Table("ShoppingCartItem")]
     public class ShoppingCartItem
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("id")]
         public Guid Id { get; set; }
 
-        [Column("shopping_cart_id")]
         public Guid ShoppingCartId { get; set; }
+
+        public Guid ProductId { get; set; }
+
+        public int Quantity { get; set; }
+
+        public decimal UnitPrice { get; set; }
+
+        [ForeignKey("ShoppingCartId")]
         public ShoppingCart ShoppingCart { get; set; }
 
-        [Column("product_id")]
-        public Guid ProductId { get; set; }
+        [ForeignKey("ProductId")]
         public Product Product { get; set; }
-
-        [Column("quantity")]
-        public int Quantity { get; set; }
     }
 }

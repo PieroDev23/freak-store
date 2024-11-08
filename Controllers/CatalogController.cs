@@ -21,11 +21,11 @@ namespace freak_store.Controllers
         public async Task<IActionResult> Index(Guid? categoryId)
         {
             var categories = await _context.DataCategories.ToListAsync();
-            var products = _context.DataProducts
-                                   .Include(p => p.Inventory)
-                                   .Include(p => p.Category)
-                                   .Where(p => !categoryId.HasValue || p.CategoryId == categoryId)
-                                   .ToList();
+            var products = await _context.DataProducts
+                .Include(p => p.Inventory)
+                .Include(p => p.Category)
+                .Where(p => !categoryId.HasValue || p.CategoryId == categoryId)
+                .ToListAsync();
 
             ViewBag.Categories = categories;
             return View(products);
@@ -67,6 +67,57 @@ namespace freak_store.Controllers
             }
 
             return View(product);
+        }
+
+        // Acción para añadir un producto al carrito
+        [HttpPost]
+        public async Task<IActionResult> AddToCart(Guid productId)
+        {
+            if (productId == Guid.Empty)
+            {
+                return Json(new { success = false, message = "ID de producto no válido." });
+            }
+
+            var userId = Guid.Parse(User.FindFirst("UserId").Value); // Obtiene el UserId del usuario autenticado
+            var cart = await GetOrCreateCartAsync(userId);
+
+            var cartItem = cart.Items.FirstOrDefault(i => i.ProductId == productId);
+            if (cartItem != null)
+            {
+                cartItem.Quantity += 1;
+            }
+            else
+            {
+                cart.Items.Add(new ShoppingCartItem
+                {
+                    ProductId = productId,
+                    Quantity = 1
+                });
+            }
+
+            await _context.SaveChangesAsync();
+            return Json(new { success = true, message = "Producto añadido al carrito" });
+        }
+
+        // Método auxiliar para obtener o crear un carrito de compras
+        private async Task<ShoppingCart> GetOrCreateCartAsync(Guid userId)
+        {
+            var cart = await _context.ShoppingCarts
+                .Include(c => c.Items)
+                .FirstOrDefaultAsync(c => c.UserId == userId);
+
+            if (cart == null)
+            {
+                cart = new ShoppingCart
+                {
+                    UserId = userId,
+                    CreatedAt = DateTime.UtcNow
+                };
+                _context.ShoppingCarts.Add(cart);
+                await _context.SaveChangesAsync();
+            }
+
+            return cart;
         }
     }
 }

@@ -4,10 +4,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace freak_store.Migrations
+namespace freak_store.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class AddShoppingCartTables : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -282,7 +282,7 @@ namespace freak_store.Migrations
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     user_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
                 },
                 constraints: table =>
                 {
@@ -296,26 +296,27 @@ namespace freak_store.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "shopping_cart_item",
+                name: "ShoppingCartItem",
                 columns: table => new
                 {
-                    id = table.Column<Guid>(type: "uuid", nullable: false),
-                    shopping_cart_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    product_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    quantity = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    ShoppingCartId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ProductId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Quantity = table.Column<int>(type: "integer", nullable: false),
+                    UnitPrice = table.Column<decimal>(type: "numeric", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_shopping_cart_item", x => x.id);
+                    table.PrimaryKey("PK_ShoppingCartItem", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_shopping_cart_item_products_product_id",
-                        column: x => x.product_id,
+                        name: "FK_ShoppingCartItem_products_ProductId",
+                        column: x => x.ProductId,
                         principalTable: "products",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_shopping_cart_item_shopping_cart_shopping_cart_id",
-                        column: x => x.shopping_cart_id,
+                        name: "FK_ShoppingCartItem_shopping_cart_ShoppingCartId",
+                        column: x => x.ShoppingCartId,
                         principalTable: "shopping_cart",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
@@ -379,14 +380,14 @@ namespace freak_store.Migrations
                 column: "user_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_shopping_cart_item_product_id",
-                table: "shopping_cart_item",
-                column: "product_id");
+                name: "IX_ShoppingCartItem_ProductId",
+                table: "ShoppingCartItem",
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_shopping_cart_item_shopping_cart_id",
-                table: "shopping_cart_item",
-                column: "shopping_cart_id");
+                name: "IX_ShoppingCartItem_ShoppingCartId",
+                table: "ShoppingCartItem",
+                column: "ShoppingCartId");
         }
 
         /// <inheritdoc />
@@ -411,7 +412,7 @@ namespace freak_store.Migrations
                 name: "contacts");
 
             migrationBuilder.DropTable(
-                name: "shopping_cart_item");
+                name: "ShoppingCartItem");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
