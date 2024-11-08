@@ -2,18 +2,21 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using freak_store.Data;
 
 #nullable disable
 
-namespace freak_store.Data.Migrations
+namespace freak_store.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241108081145_AddShoppingCartTables")]
+    partial class AddShoppingCartTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -409,6 +412,56 @@ namespace freak_store.Data.Migrations
                     b.ToTable("products");
                 });
 
+            modelBuilder.Entity("freak_store.Models.ShoppingCart", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("shopping_cart");
+                });
+
+            modelBuilder.Entity("freak_store.Models.ShoppingCartItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("product_id");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer")
+                        .HasColumnName("quantity");
+
+                    b.Property<Guid>("ShoppingCartId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("shopping_cart_id");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("ShoppingCartId");
+
+                    b.ToTable("shopping_cart_item");
+                });
+
             modelBuilder.Entity("freak_store.Models.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -538,6 +591,36 @@ namespace freak_store.Data.Migrations
                     b.Navigation("Inventory");
                 });
 
+            modelBuilder.Entity("freak_store.Models.ShoppingCart", b =>
+                {
+                    b.HasOne("freak_store.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("freak_store.Models.ShoppingCartItem", b =>
+                {
+                    b.HasOne("freak_store.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("freak_store.Models.ShoppingCart", "ShoppingCart")
+                        .WithMany("Items")
+                        .HasForeignKey("ShoppingCartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("ShoppingCart");
+                });
+
             modelBuilder.Entity("freak_store.Models.Category", b =>
                 {
                     b.Navigation("Products");
@@ -551,6 +634,11 @@ namespace freak_store.Data.Migrations
             modelBuilder.Entity("freak_store.Models.Inventory", b =>
                 {
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("freak_store.Models.ShoppingCart", b =>
+                {
+                    b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
         }

@@ -4,10 +4,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace freak_store.Data.Migrations
+namespace freak_store.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialSetup : Migration
+    public partial class AddShoppingCartTables : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -276,6 +276,51 @@ namespace freak_store.Data.Migrations
                         principalColumn: "id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "shopping_cart",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    user_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_shopping_cart", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_shopping_cart_users_user_id",
+                        column: x => x.user_id,
+                        principalTable: "users",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "shopping_cart_item",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    shopping_cart_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    product_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    quantity = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_shopping_cart_item", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_shopping_cart_item_products_product_id",
+                        column: x => x.product_id,
+                        principalTable: "products",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_shopping_cart_item_shopping_cart_shopping_cart_id",
+                        column: x => x.shopping_cart_id,
+                        principalTable: "shopping_cart",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -327,6 +372,21 @@ namespace freak_store.Data.Migrations
                 name: "IX_products_inventory_id",
                 table: "products",
                 column: "inventory_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_shopping_cart_user_id",
+                table: "shopping_cart",
+                column: "user_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_shopping_cart_item_product_id",
+                table: "shopping_cart_item",
+                column: "product_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_shopping_cart_item_shopping_cart_id",
+                table: "shopping_cart_item",
+                column: "shopping_cart_id");
         }
 
         /// <inheritdoc />
@@ -351,16 +411,19 @@ namespace freak_store.Data.Migrations
                 name: "contacts");
 
             migrationBuilder.DropTable(
-                name: "products");
-
-            migrationBuilder.DropTable(
-                name: "users");
+                name: "shopping_cart_item");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "products");
+
+            migrationBuilder.DropTable(
+                name: "shopping_cart");
 
             migrationBuilder.DropTable(
                 name: "categories");
@@ -370,6 +433,9 @@ namespace freak_store.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "inventory");
+
+            migrationBuilder.DropTable(
+                name: "users");
         }
     }
 }

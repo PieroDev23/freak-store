@@ -29,9 +29,13 @@
 
                 <!-- Íconos de carrito y perfil alineados a la derecha -->
                 <ul class="navbar-nav ms-auto d-flex align-items-center">
+                    <!-- Ícono del carrito de compras -->
                     <li class="nav-item me-3">
-                        <a class="nav-link text-white" href="#"><i class="bi bi-cart"></i> <span>0</span></a>
+                        <a class="nav-link text-white" href="@Url.Action("Index", "ShoppingCart")">
+                            <i class="bi bi-cart"></i> <span>0</span>
+                        </a>
                     </li>
+                    <!-- Ícono de perfil -->
                     <li class="nav-item">
                         @if (User.Identity.IsAuthenticated)
                         {

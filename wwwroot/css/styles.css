@@ -129,3 +129,25 @@ footer {
   font-size: inherit; /* Asegura que hereden el mismo tamaño de letra */
   color: var(--primary-color); /* Usar el color primario si es necesario */
 }
+.list-group-item {
+  background-color: #232c3b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+}
+
+.card-body {
+  background-color: #1d284c;
+  color: white;
+}
+
+.card-title,
+.d-flex span,
+.text-success {
+  color: white;
+}
+
+.btn-primary {
+  background-color: #1da1f2;
+  border: none;
+}
