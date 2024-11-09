@@ -12,13 +12,17 @@ var connectionString = builder.Configuration.GetConnectionString("PostgreSQLConn
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
 
 // Configuración de identidad de ASP.NET Core
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddDefaultIdentity<IdentityUser>(options => 
+{
+    options.SignIn.RequireConfirmedAccount = false; // Desactivar confirmación de cuenta para facilitar el registro
+    options.Password.RequireNonAlphanumeric = false; // Ajustes de complejidad de contraseña
+})
+.AddEntityFrameworkStores<ApplicationDbContext>();
 
 // Agrega servicios de Razor Pages y MVC
 builder.Services.AddControllersWithViews();
 
-// Configuración de Swagger
+// Configuración de Swagger solo en desarrollo
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo
@@ -38,9 +42,15 @@ builder.Services.AddHttpClient<CheapSharkService>(client =>
 
 var app = builder.Build();
 
-// Configuración del pipeline de la aplicación
+// Aplicar migraciones automáticas en entorno de desarrollo
 if (app.Environment.IsDevelopment())
 {
+    using (var scope = app.Services.CreateScope())
+    {
+        var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        dbContext.Database.Migrate(); // Ejecuta las migraciones automáticamente
+    }
+
     app.UseMigrationsEndPoint();
     app.UseSwagger();
     app.UseSwaggerUI(c =>

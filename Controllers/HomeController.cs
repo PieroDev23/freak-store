@@ -3,50 +3,44 @@ using Microsoft.AspNetCore.Mvc;
 using freak_store.ViewModels;
 using freak_store.Data;
 using Microsoft.EntityFrameworkCore;
-using System.Text.Json;
 using freak_store.Services;
 
-namespace freak_store.Controllers;
-
-public class HomeController : Controller
+namespace freak_store.Controllers
 {
-    private readonly ApplicationDbContext _context;
-
-
-    public HomeController(
-        ApplicationDbContext context
-       )
+    public class HomeController : Controller
     {
-        _context = context;
-    }
+        private readonly ApplicationDbContext _context;
 
-    public IActionResult Index()
-    {
-        var products = _context.DataProducts
-                               .Include(p => p.Inventory)
-                               .Include(p => p.Category)
-                               .ToList();
-
-
-        // Crear el modelo de vista y pasar ambos conjuntos de datos
-        var viewModel = new ProductsViewModel
+        public HomeController(ApplicationDbContext context)
         {
-            Products = products,
-        };
+            _context = context;
+        }
 
-        return View(viewModel);
-    }
+        public IActionResult Index()
+        {
+            var products = _context.Products  // Cambiado de DataProducts a Products
+                                   .Include(p => p.Inventory)
+                                   .Include(p => p.Category)
+                                   .ToList();
 
+            // Crear el modelo de vista y pasar ambos conjuntos de datos
+            var viewModel = new ProductsViewModel
+            {
+                Products = products,
+            };
 
-    public IActionResult Privacy()
-    {
-        return View();
-    }
+            return View(viewModel);
+        }
 
+        public IActionResult Privacy()
+        {
+            return View();
+        }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
     }
 }

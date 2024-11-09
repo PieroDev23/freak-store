@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace freak_store.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -52,19 +52,19 @@ namespace freak_store.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "categories",
+                name: "Categories",
                 columns: table => new
                 {
-                    id = table.Column<Guid>(type: "uuid", nullable: false),
-                    name = table.Column<string>(type: "text", nullable: true),
-                    description = table.Column<string>(type: "text", nullable: true),
-                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
-                    updated_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    deleted_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_categories", x => x.id);
+                    table.PrimaryKey("PK_Categories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -76,7 +76,7 @@ namespace freak_store.Data.Migrations
                     email = table.Column<string>(type: "text", nullable: true),
                     subject = table.Column<string>(type: "text", nullable: true),
                     message = table.Column<string>(type: "text", nullable: true),
-                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     updated_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
@@ -90,7 +90,7 @@ namespace freak_store.Data.Migrations
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     percentage = table.Column<int>(type: "integer", nullable: false),
-                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     updated_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     deleted_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
@@ -100,36 +100,22 @@ namespace freak_store.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "inventory",
+                name: "Users",
                 columns: table => new
                 {
-                    id = table.Column<Guid>(type: "uuid", nullable: false),
-                    quantity = table.Column<int>(type: "integer", nullable: false),
-                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Firstname = table.Column<string>(type: "text", nullable: false),
+                    Lastname = table.Column<string>(type: "text", nullable: false),
+                    Username = table.Column<string>(type: "text", nullable: false),
+                    Email = table.Column<string>(type: "text", nullable: false),
+                    Password = table.Column<string>(type: "text", nullable: false),
+                    Phone = table.Column<int>(type: "integer", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_inventory", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "users",
-                columns: table => new
-                {
-                    id = table.Column<Guid>(type: "uuid", nullable: false),
-                    first_name = table.Column<string>(type: "text", nullable: false),
-                    password = table.Column<string>(type: "text", nullable: false),
-                    phone = table.Column<int>(type: "integer", nullable: false),
-                    last_name = table.Column<string>(type: "text", nullable: false),
-                    username = table.Column<string>(type: "text", nullable: false),
-                    email = table.Column<string>(type: "text", nullable: false),
-                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
-                    updated_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    deleted_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_users", x => x.id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -239,86 +225,97 @@ namespace freak_store.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "products",
-                columns: table => new
-                {
-                    id = table.Column<Guid>(type: "uuid", nullable: false),
-                    name = table.Column<string>(type: "text", nullable: true),
-                    description = table.Column<string>(type: "text", nullable: true),
-                    price = table.Column<decimal>(type: "numeric", nullable: false),
-                    sku = table.Column<string>(type: "text", nullable: true),
-                    img = table.Column<string>(type: "text", nullable: true),
-                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
-                    updated_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    deleted_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    category_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    discount_id = table.Column<Guid>(type: "uuid", nullable: true),
-                    inventory_id = table.Column<Guid>(type: "uuid", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_products", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_products_categories_category_id",
-                        column: x => x.category_id,
-                        principalTable: "categories",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_products_discounts_discount_id",
-                        column: x => x.discount_id,
-                        principalTable: "discounts",
-                        principalColumn: "id");
-                    table.ForeignKey(
-                        name: "FK_products_inventory_inventory_id",
-                        column: x => x.inventory_id,
-                        principalTable: "inventory",
-                        principalColumn: "id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "shopping_cart",
-                columns: table => new
-                {
-                    id = table.Column<Guid>(type: "uuid", nullable: false),
-                    user_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_shopping_cart", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_shopping_cart_users_user_id",
-                        column: x => x.user_id,
-                        principalTable: "users",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ShoppingCartItem",
+                name: "Products",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    ShoppingCartId = table.Column<Guid>(type: "uuid", nullable: false),
-                    ProductId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Quantity = table.Column<int>(type: "integer", nullable: false),
-                    UnitPrice = table.Column<decimal>(type: "numeric", nullable: false)
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false),
+                    Price = table.Column<decimal>(type: "numeric", nullable: false),
+                    Img = table.Column<string>(type: "text", nullable: false),
+                    Sku = table.Column<string>(type: "text", nullable: false),
+                    CategoryId = table.Column<Guid>(type: "uuid", nullable: false),
+                    DiscountId = table.Column<Guid>(type: "uuid", nullable: true),
+                    InventoryId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ShoppingCartItem", x => x.Id);
+                    table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ShoppingCartItem_products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "products",
-                        principalColumn: "id",
+                        name: "FK_Products_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ShoppingCartItem_shopping_cart_ShoppingCartId",
+                        name: "FK_Products_discounts_DiscountId",
+                        column: x => x.DiscountId,
+                        principalTable: "discounts",
+                        principalColumn: "id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ShoppingCarts",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShoppingCarts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ShoppingCarts_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Inventory",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Quantity = table.Column<int>(type: "integer", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ProductId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Inventory", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Inventory_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ShoppingCartItems",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    ProductId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ShoppingCartId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Quantity = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShoppingCartItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ShoppingCartItems_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ShoppingCartItems_ShoppingCarts_ShoppingCartId",
                         column: x => x.ShoppingCartId,
-                        principalTable: "shopping_cart",
-                        principalColumn: "id",
+                        principalTable: "ShoppingCarts",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -360,34 +357,36 @@ namespace freak_store.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_products_category_id",
-                table: "products",
-                column: "category_id");
+                name: "IX_Inventory_ProductId",
+                table: "Inventory",
+                column: "ProductId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_products_discount_id",
-                table: "products",
-                column: "discount_id");
+                name: "IX_Products_CategoryId",
+                table: "Products",
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_products_inventory_id",
-                table: "products",
-                column: "inventory_id");
+                name: "IX_Products_DiscountId",
+                table: "Products",
+                column: "DiscountId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_shopping_cart_user_id",
-                table: "shopping_cart",
-                column: "user_id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ShoppingCartItem_ProductId",
-                table: "ShoppingCartItem",
+                name: "IX_ShoppingCartItems_ProductId",
+                table: "ShoppingCartItems",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ShoppingCartItem_ShoppingCartId",
-                table: "ShoppingCartItem",
+                name: "IX_ShoppingCartItems_ShoppingCartId",
+                table: "ShoppingCartItems",
                 column: "ShoppingCartId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ShoppingCarts_UserId",
+                table: "ShoppingCarts",
+                column: "UserId",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -412,7 +411,10 @@ namespace freak_store.Data.Migrations
                 name: "contacts");
 
             migrationBuilder.DropTable(
-                name: "ShoppingCartItem");
+                name: "Inventory");
+
+            migrationBuilder.DropTable(
+                name: "ShoppingCartItems");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -421,22 +423,19 @@ namespace freak_store.Data.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "products");
+                name: "Products");
 
             migrationBuilder.DropTable(
-                name: "shopping_cart");
+                name: "ShoppingCarts");
 
             migrationBuilder.DropTable(
-                name: "categories");
+                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "discounts");
 
             migrationBuilder.DropTable(
-                name: "inventory");
-
-            migrationBuilder.DropTable(
-                name: "users");
+                name: "Users");
         }
     }
 }

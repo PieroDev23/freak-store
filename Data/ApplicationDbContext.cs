@@ -1,6 +1,6 @@
-﻿using freak_store.Models;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using freak_store.Models;
 
 namespace freak_store.Data
 {
@@ -11,12 +11,12 @@ namespace freak_store.Data
         {
         }
 
-        public DbSet<User> DataUsers { get; set; }
-        public DbSet<Category> DataCategories { get; set; }
-        public DbSet<Discount> DataDiscounts { get; set; }
-        public DbSet<Inventory> DataInventory { get; set; }
-        public DbSet<Contact> DataContact { get; set; }
-        public DbSet<Product> DataProducts { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Discount> Discounts { get; set; }
+        public DbSet<Inventory> Inventory { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
 
@@ -24,36 +24,25 @@ namespace freak_store.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<ShoppingCartItem>().ToTable("ShoppingCartItem");
-
-            // Configuración de valores predeterminados para CreatedAt
-            modelBuilder.Entity<Category>()
-                .Property(b => b.CreatedAt)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-            modelBuilder.Entity<Discount>()
-                .Property(b => b.CreatedAt)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-            modelBuilder.Entity<Inventory>()
-                .Property(b => b.CreatedAt)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
             modelBuilder.Entity<Product>()
-                .Property(b => b.CreatedAt)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+                .HasOne(p => p.Inventory)
+                .WithOne(i => i.Product)
+                .HasForeignKey<Inventory>(i => i.ProductId);
 
-            modelBuilder.Entity<User>()
-                .Property(b => b.CreatedAt)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-            modelBuilder.Entity<Contact>()
-                .Property(b => b.CreatedAt)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            modelBuilder.Entity<ShoppingCartItem>()
+                .HasOne(sci => sci.ShoppingCart)
+                .WithMany(sc => sc.Items)
+                .HasForeignKey(sci => sci.ShoppingCartId);
 
             modelBuilder.Entity<ShoppingCart>()
-                .Property(b => b.CreatedAt)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+                .HasMany(sc => sc.Items)
+                .WithOne(sci => sci.ShoppingCart)
+                .HasForeignKey(sci => sci.ShoppingCartId);
+            
+            modelBuilder.Entity<Category>()
+                .HasMany(c => c.Products)
+                .WithOne(p => p.Category)
+                .HasForeignKey(p => p.CategoryId);
         }
     }
 }

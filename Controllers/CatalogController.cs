@@ -20,8 +20,8 @@ namespace freak_store.Controllers
         // Acción principal del catálogo
         public async Task<IActionResult> Index(Guid? categoryId)
         {
-            var categories = await _context.DataCategories.ToListAsync();
-            var products = await _context.DataProducts
+            var categories = await _context.Categories.ToListAsync();
+            var products = await _context.Products
                 .Include(p => p.Inventory)
                 .Include(p => p.Category)
                 .Where(p => !categoryId.HasValue || p.CategoryId == categoryId)
@@ -40,7 +40,7 @@ namespace freak_store.Controllers
                 return RedirectToAction("Index");
             }
 
-            var product = await _context.DataProducts
+            var product = await _context.Products
                 .FirstOrDefaultAsync(p => EF.Functions.ILike(p.Name, $"%{query}%"));
 
             if (product == null)
@@ -56,7 +56,7 @@ namespace freak_store.Controllers
         // Acción para mostrar los detalles de un producto
         public async Task<IActionResult> Details(Guid id)
         {
-            var product = await _context.DataProducts
+            var product = await _context.Products
                 .Include(p => p.Category)
                 .Include(p => p.Inventory)
                 .FirstOrDefaultAsync(p => p.Id == id);
@@ -78,9 +78,26 @@ namespace freak_store.Controllers
                 return Json(new { success = false, message = "ID de producto no válido." });
             }
 
-            var userId = Guid.Parse(User.FindFirst("UserId").Value); // Obtiene el UserId del usuario autenticado
+            // Validación del UserId
+            var userIdClaim = User.FindFirst("UserId")?.Value;
+            if (string.IsNullOrEmpty(userIdClaim))
+            {
+                return Json(new { success = false, message = "Usuario no autenticado." });
+            }
+
+            var userId = Guid.Parse(userIdClaim);
+
+            // Obtiene o crea el carrito
             var cart = await GetOrCreateCartAsync(userId);
 
+            // Comprueba si el producto existe antes de añadirlo
+            var product = await _context.Products.FindAsync(productId);
+            if (product == null)
+            {
+                return Json(new { success = false, message = "Producto no encontrado." });
+            }
+
+            // Añade el producto al carrito
             var cartItem = cart.Items.FirstOrDefault(i => i.ProductId == productId);
             if (cartItem != null)
             {

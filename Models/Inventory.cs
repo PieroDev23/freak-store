@@ -1,25 +1,14 @@
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using System;
 
 namespace freak_store.Models
 {
-    [Table("inventory")]
     public class Inventory
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("id")]
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } // Clave primaria
+        public int Quantity { get; set; } // Cantidad en inventario
+        public DateTime CreatedAt { get; set; } // Fecha de creación
 
-        [Column("quantity")]
-        public int Quantity { get; set; }
-
-        [Column("created_at")]
-        [DefaultValue("CURRENT_TIMESTAMP")]
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
-
-        // Foreign key
-        public ICollection<Product>? Products { get; set; }
+        public Guid ProductId { get; set; } // Clave foránea hacia Product
+        public Product Product { get; set; } // Relación con Product
     }
 }

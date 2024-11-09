@@ -1,33 +1,16 @@
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using System;
 
 namespace freak_store.Models
 {
-    [Table("categories")]
     public class Category
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("id")]
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } // Clave primaria, tipo GUID
+        public string Name { get; set; } // Nombre de la categoría
+        public string Description { get; set; } // Descripción de la categoría
+        public DateTime CreatedAt { get; set; } // Fecha de creación
+        public DateTime? UpdatedAt { get; set; } // Fecha de actualización (opcional)
+        public DateTime? DeletedAt { get; set; } // Fecha de eliminación (opcional)
 
-        [Column("name")]
-        public string? Name { get; set; }
-
-        [Column("description")]
-        public string? Description { get; set; }
-
-        [Column("created_at")]
-        [DefaultValue("CURRENT_TIMESTAMP")]
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
-
-        [Column("updated_at")]
-        public DateTime? UpdatedAt { get; set; }
-
-        [Column("deleted_at")]
-        public DateTime? DeletedAt { get; set; }
-
-        public ICollection<Product>? Products { get; set; }
+        public ICollection<Product> Products { get; set; } // Relación uno a muchos con productos
     }
 }

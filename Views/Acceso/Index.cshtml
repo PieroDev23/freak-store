@@ -75,10 +75,32 @@
                         <label for="register-password" class="form-label text-white">* Contraseña</label>
                         <input type="password" class="form-control" id="register-password" name="password" placeholder="Contraseña" required style="border-radius: 4px;" minlength="6">
                         <div class="invalid-feedback">La contraseña debe tener al menos 6 caracteres.</div>
+                        <small id="passwordHelpBlock" class="form-text text-muted">
+                            La contraseña debe contener al menos una letra mayúscula, una minúscula, y un número.
+                        </small>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100" style="background-color: #1da1f2; border: none; border-radius: 4px;">REGISTRARSE</button>
+                    <button type="submit" id="registerBtn" class="btn btn-primary w-100" style="background-color: #1da1f2; border: none; border-radius: 4px;" disabled>REGISTRARSE</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    const passwordInput = document.getElementById("register-password");
+    const registerButton = document.getElementById("registerBtn");
+
+    passwordInput.addEventListener("input", function() {
+        const password = passwordInput.value;
+        const hasUpperCase = /[A-Z]/.test(password);
+        const hasLowerCase = /[a-z]/.test(password);
+        const hasNumber = /[0-9]/.test(password);
+        const isValidLength = password.length >= 6;
+
+        if (hasUpperCase && hasLowerCase && hasNumber && isValidLength) {
+            registerButton.disabled = false;
+        } else {
+            registerButton.disabled = true;
+        }
+    });
+</script>

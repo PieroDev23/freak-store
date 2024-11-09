@@ -2,8 +2,8 @@ using freak_store.Data;
 using freak_store.Models;
 using Microsoft.AspNetCore.Mvc;
 using MLSentymentalAnalysis;
-using System;
 using Microsoft.Extensions.Logging;
+using System;
 
 namespace freak_store.Controllers
 {
@@ -28,7 +28,7 @@ namespace freak_store.Controllers
         {
             if (!ModelState.IsValid)
             {
-                TempData["ErrorMessage"] = "Hubo errores al enviar el formulario";
+                TempData["ErrorMessage"] = "Hubo errores al enviar el formulario.";
                 return RedirectToAction("Index");
             }
 
@@ -37,7 +37,7 @@ namespace freak_store.Controllers
             {
                 Comentario = model.Message
             };
-            
+
             MLModelTextClassification.ModelOutput output = MLModelTextClassification.Predict(sampleData);
             var sortedScoresWithLabel = MLModelTextClassification.PredictAllLabels(sampleData);
             var scoreKeyFirst = sortedScoresWithLabel.ToList()[0].Key;
@@ -47,7 +47,7 @@ namespace freak_store.Controllers
             model.Message = scoreKeyFirst == "1" && scoreValueFirst > 0.5 ? "Positivo" : "Negativo";
 
             // Guardar el mensaje en la base de datos
-            _context.DataContact.Add(model);
+            _context.Contacts.Add(model);  // Cambiado de DataContact a Contacts
             _context.SaveChanges();
 
             TempData["SuccessMessage"] = "¡Gracias por enviarnos un mensaje, nosotros nos pondremos en contacto contigo!";

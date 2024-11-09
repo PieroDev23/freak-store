@@ -12,8 +12,8 @@ using freak_store.Data;
 namespace freak_store.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241108102245_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20241109045121_UpdateContactTable")]
+    partial class UpdateContactTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -229,34 +229,28 @@ namespace freak_store.Data.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("deleted_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
-                        .HasColumnName("description");
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .HasColumnType("text")
-                        .HasColumnName("name");
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
-                    b.ToTable("categories");
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("freak_store.Models.Contact", b =>
@@ -266,10 +260,8 @@ namespace freak_store.Data.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+                        .HasColumnName("created_at");
 
                     b.Property<string>("Email")
                         .HasColumnType("text")
@@ -304,10 +296,8 @@ namespace freak_store.Data.Migrations
                         .HasColumnName("id");
 
                     b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+                        .HasColumnName("created_at");
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("timestamp with time zone")
@@ -330,76 +320,58 @@ namespace freak_store.Data.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uuid");
 
                     b.Property<int>("Quantity")
-                        .HasColumnType("integer")
-                        .HasColumnName("quantity");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.ToTable("inventory");
+                    b.HasIndex("ProductId")
+                        .IsUnique();
+
+                    b.ToTable("Inventory");
                 });
 
             modelBuilder.Entity("freak_store.Models.Product", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("CategoryId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("category_id");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("deleted_at");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
-                        .HasColumnName("description");
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<Guid?>("DiscountId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("discount_id");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Img")
-                        .HasColumnType("text")
-                        .HasColumnName("img");
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<Guid?>("InventoryId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("inventory_id");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
-                        .HasColumnType("text")
-                        .HasColumnName("name");
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("numeric")
-                        .HasColumnName("price");
+                        .HasColumnType("numeric");
 
                     b.Property<string>("Sku")
-                        .HasColumnType("text")
-                        .HasColumnName("sku");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -407,33 +379,27 @@ namespace freak_store.Data.Migrations
 
                     b.HasIndex("DiscountId");
 
-                    b.HasIndex("InventoryId");
-
-                    b.ToTable("products");
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("freak_store.Models.ShoppingCart", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid>("UserId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("user_id");
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
-                    b.ToTable("shopping_cart");
+                    b.ToTable("ShoppingCarts");
                 });
 
             modelBuilder.Entity("freak_store.Models.ShoppingCartItem", b =>
@@ -451,71 +417,53 @@ namespace freak_store.Data.Migrations
                     b.Property<Guid>("ShoppingCartId")
                         .HasColumnType("uuid");
 
-                    b.Property<decimal>("UnitPrice")
-                        .HasColumnType("numeric");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId");
 
                     b.HasIndex("ShoppingCartId");
 
-                    b.ToTable("ShoppingCartItem", (string)null);
+                    b.ToTable("ShoppingCartItems");
                 });
 
             modelBuilder.Entity("freak_store.Models.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("deleted_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("email");
+                        .HasColumnType("text");
 
                     b.Property<string>("Firstname")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("first_name");
+                        .HasColumnType("text");
 
                     b.Property<string>("Lastname")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("last_name");
+                        .HasColumnType("text");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("password");
+                        .HasColumnType("text");
 
                     b.Property<int>("Phone")
-                        .HasColumnType("integer")
-                        .HasColumnName("phone");
+                        .HasColumnType("integer");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("username");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.ToTable("users");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -569,6 +517,17 @@ namespace freak_store.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("freak_store.Models.Inventory", b =>
+                {
+                    b.HasOne("freak_store.Models.Product", "Product")
+                        .WithOne("Inventory")
+                        .HasForeignKey("freak_store.Models.Inventory", "ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("freak_store.Models.Product", b =>
                 {
                     b.HasOne("freak_store.Models.Category", "Category")
@@ -581,22 +540,16 @@ namespace freak_store.Data.Migrations
                         .WithMany("Products")
                         .HasForeignKey("DiscountId");
 
-                    b.HasOne("freak_store.Models.Inventory", "Inventory")
-                        .WithMany("Products")
-                        .HasForeignKey("InventoryId");
-
                     b.Navigation("Category");
 
                     b.Navigation("Discount");
-
-                    b.Navigation("Inventory");
                 });
 
             modelBuilder.Entity("freak_store.Models.ShoppingCart", b =>
                 {
                     b.HasOne("freak_store.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
+                        .WithOne("ShoppingCart")
+                        .HasForeignKey("freak_store.Models.ShoppingCart", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -632,14 +585,21 @@ namespace freak_store.Data.Migrations
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("freak_store.Models.Inventory", b =>
+            modelBuilder.Entity("freak_store.Models.Product", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("Inventory")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("freak_store.Models.ShoppingCart", b =>
                 {
                     b.Navigation("Items");
+                });
+
+            modelBuilder.Entity("freak_store.Models.User", b =>
+                {
+                    b.Navigation("ShoppingCart")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
