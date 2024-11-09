@@ -1,9 +1,7 @@
 using freak_store.Data;
 using freak_store.Models;
 using Microsoft.AspNetCore.Mvc;
-using MLSentymentalAnalysis;
-using Microsoft.Extensions.Logging;
-using System;
+using MLModeloContact;
 
 namespace freak_store.Controllers
 {
@@ -28,31 +26,39 @@ namespace freak_store.Controllers
         {
             if (!ModelState.IsValid)
             {
-                TempData["ErrorMessage"] = "Hubo errores al enviar el formulario.";
+                TempData["ErrorMessage"] = "Hubo errores al enviar el formulario";
                 return RedirectToAction("Index");
             }
 
-            // Clasificación de sentimiento usando el modelo de ML
-            MLModelTextClassification.ModelInput sampleData = new MLModelTextClassification.ModelInput()
+            // Crear la entrada de predicción basada en el mensaje
+            var sampleData = new MLModelContact.ModelInput()
             {
                 Comentario = model.Message
             };
 
-            MLModelTextClassification.ModelOutput output = MLModelTextClassification.Predict(sampleData);
-            var sortedScoresWithLabel = MLModelTextClassification.PredictAllLabels(sampleData);
-            var scoreKeyFirst = sortedScoresWithLabel.ToList()[0].Key;
-            var scoreValueFirst = sortedScoresWithLabel.ToList()[0].Value;
+            // Realizar la predicción
+            var output = MLModelContact.Predict(sampleData);
+            var sortedScoresWithLabel = MLModelContact.PredictAllLabels(sampleData);
 
-            // Modificar el mensaje según el análisis de sentimiento
-            model.Message = scoreKeyFirst == "1" && scoreValueFirst > 0.5 ? "Positivo" : "Negativo";
+            // Asignación de resultado al Subject basado en el score y etiquetas    
+            var scoreKeyFirst = sortedScoresWithLabel.First().Key;
+            var scoreValueFirst = sortedScoresWithLabel.First().Value;
 
-            // Guardar el mensaje en la base de datos
-            _context.Contacts.Add(model);  // Cambiado de DataContact a Contacts
+            model.Subject = scoreKeyFirst == "1" && scoreValueFirst > 0.5 ? "Positivo" : "Negativo";
+
+            Console.WriteLine($"{scoreKeyFirst,-40}{scoreValueFirst,-20}");
+
+            // Guardar el modelo en la base de datos
+            _context.Add(model);
             _context.SaveChanges();
 
+            // Mensaje de éxito para la vista
             TempData["SuccessMessage"] = "¡Gracias por enviarnos un mensaje, nosotros nos pondremos en contacto contigo!";
+
+            // Limpiar el modelo del formulario
             return RedirectToAction("Index");
         }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

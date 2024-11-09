@@ -44,8 +44,12 @@
 
                         <div class="mb-3">
                             <label for="Subject" class="form-label">Asunto</label>
-                            <input asp-for="Subject" class="form-control" placeholder="Motivo del contacto" required
-                                pattern=".{1,}" title="Por favor ingresa un asunto.">
+                            <select asp-for="Subject" class="form-control" required>
+                                <option value="" disabled selected>Seleccione un motivo</option>
+                                <option value="Envio">Envío</option>
+                                <option value="Producto">Producto</option>
+                                <!-- Puedes agregar más opciones aquí si es necesario -->
+                            </select>
                         </div>
 
                         <div class="mb-3">
