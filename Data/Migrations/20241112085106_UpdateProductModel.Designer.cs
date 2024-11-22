@@ -359,7 +359,7 @@ namespace freak_store.Data.Migrations
                     b.Property<int?>("DiscountId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("DiscountId1")
+                    b.Property<int?>("DiscountId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Img")
@@ -389,7 +389,7 @@ namespace freak_store.Data.Migrations
 
                     b.HasIndex("DiscountId");
 
-                    b.HasIndex("DiscountId1");
+                    b.HasIndex("DiscountId");
 
                     b.HasIndex("InventoryId");
 
@@ -673,7 +673,7 @@ namespace freak_store.Data.Migrations
 
                     b.HasOne("freak_store.Models.Discount", null)
                         .WithMany("Products")
-                        .HasForeignKey("DiscountId1");
+                        .HasForeignKey("DiscountId");
 
                     b.HasOne("freak_store.Models.Inventory", "Inventory")
                         .WithMany()

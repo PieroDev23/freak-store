@@ -67,7 +67,7 @@ namespace freak_store.Data.Migrations
                 nullable: true);
 
             migrationBuilder.AddColumn<int>(
-                name: "DiscountId1",
+                name: "DiscountId",
                 table: "Products",
                 type: "integer",
                 nullable: true);
@@ -128,9 +128,9 @@ namespace freak_store.Data.Migrations
                 oldType: "character varying(450)");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_DiscountId1",
+                name: "IX_Products_DiscountId",
                 table: "Products",
-                column: "DiscountId1");
+                column: "DiscountId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_InventoryId1",
@@ -138,9 +138,9 @@ namespace freak_store.Data.Migrations
                 column: "InventoryId1");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Products_Discounts_DiscountId1",
+                name: "FK_Products_Discounts_DiscountId",
                 table: "Products",
-                column: "DiscountId1",
+                column: "DiscountId",
                 principalTable: "Discounts",
                 principalColumn: "Id");
 
@@ -164,7 +164,7 @@ namespace freak_store.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Products_Discounts_DiscountId1",
+                name: "FK_Products_Discounts_DiscountId",
                 table: "Products");
 
             migrationBuilder.DropForeignKey(
@@ -176,7 +176,7 @@ namespace freak_store.Data.Migrations
                 table: "Products");
 
             migrationBuilder.DropIndex(
-                name: "IX_Products_DiscountId1",
+                name: "IX_Products_DiscountId",
                 table: "Products");
 
             migrationBuilder.DropIndex(
@@ -188,7 +188,7 @@ namespace freak_store.Data.Migrations
                 table: "Products");
 
             migrationBuilder.DropColumn(
-                name: "DiscountId1",
+                name: "DiscountId",
                 table: "Products");
 
             migrationBuilder.DropColumn(
