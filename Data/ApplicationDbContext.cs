@@ -26,17 +26,21 @@ namespace freak_store.Data
             modelBuilder.Entity<Product>()
                 .HasOne(p => p.Category)
                 .WithMany(c => c.Products)
-                .HasForeignKey(p => p.CategoryId);
+                .HasForeignKey(p => p.CategoryId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Product>()
                 .HasOne(p => p.Discount)
-                .WithMany()
-                .HasForeignKey(p => p.DiscountId);
+                .WithMany(d => d.Products)
+                .HasForeignKey(p => p.DiscountId)
+                .OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder.Entity<Product>()
                 .HasOne(p => p.Inventory)
-                .WithMany()
-                .HasForeignKey(p => p.InventoryId);
+                .WithMany(i => i.Products)
+                .HasForeignKey(p => p.InventoryId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
+
     }
 }

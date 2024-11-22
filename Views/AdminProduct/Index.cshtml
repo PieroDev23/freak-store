@@ -1,0 +1,37 @@
+@model IEnumerable<freak_store.Models.Product>
+
+@{
+    ViewData["Title"] = "Gestión de Productos";
+}
+
+<h1>Gestión de Productos</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Precio</th>
+            <th>Categoría</th>
+            <th>Descuento</th>
+            <th>Inventario</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.Name</td>
+                <td>@product.Description</td>
+                <td>@product.Price.ToString("C")</td>
+                <td>@product.Category?.Name</td>
+                <td>@product.Discount?.Percentage ?? "Sin descuento"</td>
+                <td>@product.Inventory.Quantity</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@product.Id" class="btn btn-primary">Editar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

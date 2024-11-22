@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using freak_store.Models;
 using freak_store.ViewModels;
-using System;
 using System.Threading.Tasks;
 
 namespace freak_store.Controllers
@@ -18,19 +17,25 @@ namespace freak_store.Controllers
             _signInManager = signInManager;
         }
 
-        // Vista de inicio de sesión
         [HttpGet]
         public IActionResult Login()
         {
-            return View(new LoginViewModel());
+            // Ruta explícita para asegurar que se carga la vista correcta
+            return View("~/Views/Account/Login.cshtml");
         }
 
-        // Procesar inicio de sesión
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
             {
+                var user = await _userManager.FindByNameAsync(model.Username);
+                if (user == null)
+                {
+                    ModelState.AddModelError(string.Empty, "El usuario no existe. Por favor, verifica tus credenciales.");
+                    return View("~/Views/Account/Login.cshtml", model);
+                }
+
                 var result = await _signInManager.PasswordSignInAsync(
                     model.Username,
                     model.Password,
@@ -40,57 +45,23 @@ namespace freak_store.Controllers
 
                 if (result.Succeeded)
                 {
+                    // Verificar los roles del usuario
+                    var roles = await _userManager.GetRolesAsync(user);
+                    if (roles.Contains("Admin"))
+                    {
+                        return RedirectToAction("Dashboard", "Admin");
+                    }
+
+                    // Redirigir a la vista principal si no es administrador
                     return RedirectToAction("Index", "Home");
                 }
 
                 ModelState.AddModelError(string.Empty, "Intento de inicio de sesión no válido.");
             }
 
-            return View(model);
+            return View("~/Views/Account/Login.cshtml", model);
         }
 
-        // Vista de registro
-        [HttpGet]
-        public IActionResult Register()
-        {
-            return View(new RegisterViewModel());
-        }
-
-        // Procesar registro
-        [HttpPost]
-        public async Task<IActionResult> Register(RegisterViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = new User
-                {
-                    UserName = model.Username,
-                    Email = model.Email,
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    PhoneNumber = model.Phone,
-                    CreatedAt = DateTime.UtcNow,
-                    UpdatedAt = DateTime.UtcNow
-                };
-
-                var result = await _userManager.CreateAsync(user, model.Password);
-
-                if (result.Succeeded)
-                {
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Home");
-                }
-
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
-            }
-
-            return View(model);
-        }
-
-        // Cerrar sesión
         [HttpPost]
         public async Task<IActionResult> Logout()
         {

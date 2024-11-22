@@ -5,7 +5,7 @@
 namespace freak_store.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class FixProduct : Migration
+    public partial class UpdateUserModel : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

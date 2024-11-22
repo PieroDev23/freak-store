@@ -1,0 +1,62 @@
+@model freak_store.Models.Product
+
+@{
+    ViewData["Title"] = "Editar Producto";
+}
+
+<h1>Editar Producto</h1>
+
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="Id" />
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label">Nombre</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label">Descripción</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Price" class="form-label">Precio</label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="CategoryId" class="form-label">Categoría</label>
+        <select asp-for="CategoryId" asp-items="@(new SelectList(ViewBag.Categories, "Id", "Name"))" class="form-select">
+            <option value="">Selecciona una categoría</option>
+        </select>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="DiscountId" class="form-label">Descuento</label>
+        <select asp-for="DiscountId" asp-items="@(new SelectList(ViewBag.Discounts, "Id", "Percentage"))" class="form-select">
+            <option value="">Sin descuento</option>
+        </select>
+        <span asp-validation-for="DiscountId" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Img" class="form-label">URL de la Imagen</label>
+        <input asp-for="Img" class="form-control" />
+        <span asp-validation-for="Img" class="text-danger"></span>
+        @if (!string.IsNullOrEmpty(Model.Img))
+        {
+            <div class="mt-3">
+                <img src="@Model.Img" alt="Imagen actual" style="max-width: 200px;" />
+            </div>
+        }
+    </div>
+    <div class="mb-3">
+        <label asp-for="Inventory.Quantity" class="form-label">Cantidad en Inventario</label>
+        <input asp-for="Inventory.Quantity" class="form-control" />
+        <span asp-validation-for="Inventory.Quantity" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-success">Guardar Cambios</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -6,7 +6,7 @@ namespace freak_store.Models
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Role { get; set; } // Admin o vacío para usuarios normales
+        public string? Role { get; set; } // Campo opcional para roles
 
         private DateTime _createdAt;
         public DateTime CreatedAt

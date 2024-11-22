@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using freak_store.Models;
 using freak_store.ViewModels;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace freak_store.Controllers
@@ -11,13 +12,11 @@ namespace freak_store.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _roleManager = roleManager;
         }
 
         [HttpGet]
@@ -29,41 +28,59 @@ namespace freak_store.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var user = new User
+                // Imprimir los errores del ModelState en consola para depuración
+                foreach (var state in ModelState.Values)
                 {
-                    UserName = model.Username,
-                    Email = model.Email,
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    PhoneNumber = model.Phone,
-                    Role = "User",
-                    CreatedAt = DateTime.UtcNow,
-                    UpdatedAt = DateTime.UtcNow
-                };
-
-                var result = await _userManager.CreateAsync(user, model.Password);
-
-                if (result.Succeeded)
-                {
-                    if (!await _roleManager.RoleExistsAsync("User"))
+                    foreach (var error in state.Errors)
                     {
-                        await _roleManager.CreateAsync(new IdentityRole("User"));
+                        Console.WriteLine($"ModelState Error: {error.ErrorMessage}");
                     }
-
-                    await _userManager.AddToRoleAsync(user, "User");
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Home");
                 }
 
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);
-                }
+                return View(model); // Regresar a la vista si el modelo no es válido
             }
 
-            return View(model);
+            var user = new User
+            {
+                UserName = model.Username,
+                Email = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                PhoneNumber = model.Phone,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow
+            };
+
+            try
+            {
+                // Intentar crear el usuario
+                var result = await _userManager.CreateAsync(user, model.Password);
+
+                if (!result.Succeeded)
+                {
+                    // Imprimir los errores de Identity en consola para depuración
+                    foreach (var error in result.Errors)
+                    {
+                        Console.WriteLine($"Identity Error: Code = {error.Code}, Description = {error.Description}");
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+
+                    return View(model); // Regresar a la vista con los errores
+                }
+
+                // Registrar al usuario en el rol por defecto si es necesario
+                // Nota: No estamos asignando un rol explícito por el momento
+                return RedirectToAction("Login", "Account");
+            }
+            catch (Exception ex)
+            {
+                // Capturar excepciones inesperadas
+                Console.WriteLine($"Exception: {ex.Message}");
+                ModelState.AddModelError(string.Empty, "Ocurrió un error inesperado. Inténtalo de nuevo.");
+                return View(model);
+            }
         }
 
         [HttpGet]
@@ -77,18 +94,17 @@ namespace freak_store.Controllers
         {
             if (ModelState.IsValid)
             {
+                var user = await _userManager.FindByNameAsync(model.Username);
+                if (user == null)
+                {
+                    ModelState.AddModelError(string.Empty, "El usuario no existe. Por favor, verifica tus credenciales.");
+                    return View(model);
+                }
+
                 var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, lockoutOnFailure: false);
 
                 if (result.Succeeded)
                 {
-                    var user = await _userManager.FindByNameAsync(model.Username);
-                    var roles = await _userManager.GetRolesAsync(user);
-
-                    if (roles.Contains("Admin"))
-                    {
-                        return RedirectToAction("Dashboard", "Admin");
-                    }
-
                     return RedirectToAction("Index", "Home");
                 }
 
@@ -103,32 +119,6 @@ namespace freak_store.Controllers
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> AssignAdminRole(string email)
-        {
-            var user = await _userManager.FindByEmailAsync(email);
-            if (user != null)
-            {
-                if (!await _roleManager.RoleExistsAsync("Admin"))
-                {
-                    await _roleManager.CreateAsync(new IdentityRole("Admin"));
-                }
-
-                if (!await _userManager.IsInRoleAsync(user, "Admin"))
-                {
-                    await _userManager.AddToRoleAsync(user, "Admin");
-                    user.Role = "Admin";
-                    await _userManager.UpdateAsync(user);
-                }
-
-                TempData["SuccessMessage"] = "El rol de administrador ha sido asignado correctamente.";
-                return RedirectToAction("Dashboard", "Admin");
-            }
-
-            ModelState.AddModelError("", "Usuario no encontrado.");
-            return RedirectToAction("Dashboard", "Admin");
         }
     }
 }

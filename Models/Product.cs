@@ -5,7 +5,6 @@ namespace freak_store.Models
 {
     public class Product
     {
-        [Key]
         public int Id { get; set; }
 
         [Required]
@@ -21,17 +20,20 @@ namespace freak_store.Models
 
         public string Img { get; set; }
 
-        public int? DiscountId { get; set; }
-        public Discount Discount { get; set; }
-
-        public int InventoryId { get; set; }
-        public Inventory Inventory { get; set; }
-
+        [Required]
         public int CategoryId { get; set; }
         public Category Category { get; set; }
 
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public int? DiscountId { get; set; }
+        public Discount Discount { get; set; }
+
+        [Required]
+        public int InventoryId { get; set; }
+        public Inventory Inventory { get; set; }
+
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
         public DateTime? DeletedAt { get; set; }
     }
+
 }

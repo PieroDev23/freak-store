@@ -12,8 +12,8 @@ using freak_store.Data;
 namespace freak_store.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241122164805_FixProduct")]
-    partial class FixProduct
+    [Migration("20241122081910_UpdateUserModel2")]
+    partial class UpdateUserModel2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -359,7 +359,7 @@ namespace freak_store.Data.Migrations
                     b.Property<int?>("DiscountId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("DiscountId")
+                    b.Property<int?>("DiscountId1")
                         .HasColumnType("integer");
 
                     b.Property<string>("Img")
@@ -389,7 +389,7 @@ namespace freak_store.Data.Migrations
 
                     b.HasIndex("DiscountId");
 
-                    b.HasIndex("DiscountId");
+                    b.HasIndex("DiscountId1");
 
                     b.HasIndex("InventoryId");
 
@@ -557,7 +557,6 @@ namespace freak_store.Data.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("Role")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("SecurityStamp")
@@ -680,7 +679,7 @@ namespace freak_store.Data.Migrations
 
                     b.HasOne("freak_store.Models.Discount", null)
                         .WithMany("Products")
-                        .HasForeignKey("DiscountId");
+                        .HasForeignKey("DiscountId1");
 
                     b.HasOne("freak_store.Models.Inventory", "Inventory")
                         .WithMany()

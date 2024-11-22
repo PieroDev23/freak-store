@@ -12,8 +12,8 @@ using freak_store.Data;
 namespace freak_store.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241114085226_ActualizacionCarrito")]
-    partial class ActualizacionCarrito
+    [Migration("20241122105924_UpdateRelationships5")]
+    partial class UpdateRelationships5
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -359,17 +359,11 @@ namespace freak_store.Data.Migrations
                     b.Property<int?>("DiscountId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("DiscountId1")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Img")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int>("InventoryId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("InventoryId1")
                         .HasColumnType("integer");
 
                     b.Property<string>("Name")
@@ -389,11 +383,7 @@ namespace freak_store.Data.Migrations
 
                     b.HasIndex("DiscountId");
 
-                    b.HasIndex("DiscountId1");
-
                     b.HasIndex("InventoryId");
-
-                    b.HasIndex("InventoryId1");
 
                     b.ToTable("Products");
                 });
@@ -556,6 +546,9 @@ namespace freak_store.Data.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("boolean");
 
+                    b.Property<string>("Role")
+                        .HasColumnType("text");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");
 
@@ -671,22 +664,15 @@ namespace freak_store.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("freak_store.Models.Discount", "Discount")
-                        .WithMany()
-                        .HasForeignKey("DiscountId");
-
-                    b.HasOne("freak_store.Models.Discount", null)
                         .WithMany("Products")
-                        .HasForeignKey("DiscountId1");
+                        .HasForeignKey("DiscountId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("freak_store.Models.Inventory", "Inventory")
-                        .WithMany()
+                        .WithMany("Products")
                         .HasForeignKey("InventoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("freak_store.Models.Inventory", null)
-                        .WithMany("Products")
-                        .HasForeignKey("InventoryId1");
 
                     b.Navigation("Category");
 
