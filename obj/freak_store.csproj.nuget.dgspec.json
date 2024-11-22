@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Usuarios\\Sebastean\\Escritorio\\Freak_Store\\freak_store\\freak_store.csproj": {}
+    "C:\\Users\\OS\\Desktop\\finaldeprogramacion\\freak-store\\freak_store.csproj": {}
   },
   "projects": {
-    "D:\\Usuarios\\Sebastean\\Escritorio\\Freak_Store\\freak_store\\freak_store.csproj": {
+    "C:\\Users\\OS\\Desktop\\finaldeprogramacion\\freak-store\\freak_store.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Usuarios\\Sebastean\\Escritorio\\Freak_Store\\freak_store\\freak_store.csproj",
+        "projectUniqueName": "C:\\Users\\OS\\Desktop\\finaldeprogramacion\\freak-store\\freak_store.csproj",
         "projectName": "freak_store",
-        "projectPath": "D:\\Usuarios\\Sebastean\\Escritorio\\Freak_Store\\freak_store\\freak_store.csproj",
-        "packagesPath": "C:\\Users\\Sebastean\\.nuget\\packages\\",
-        "outputPath": "D:\\Usuarios\\Sebastean\\Escritorio\\Freak_Store\\freak_store\\obj\\",
+        "projectPath": "C:\\Users\\OS\\Desktop\\finaldeprogramacion\\freak-store\\freak_store.csproj",
+        "packagesPath": "C:\\Users\\OS\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\OS\\Desktop\\finaldeprogramacion\\freak-store\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Sebastean\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\OS\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -68,6 +64,14 @@
               "target": "Package",
               "version": "[8.0.10, )"
             },
+            "Microsoft.ML": {
+              "target": "Package",
+              "version": "[3.0.1, )"
+            },
+            "Microsoft.ML.TorchSharp": {
+              "target": "Package",
+              "version": "[0.21.1, )"
+            },
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.3, )"
@@ -75,6 +79,10 @@
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
               "version": "[8.0.10, )"
+            },
+            "TorchSharp-cpu": {
+              "target": "Package",
+              "version": "[0.101.5, )"
             }
           },
           "imports": [
