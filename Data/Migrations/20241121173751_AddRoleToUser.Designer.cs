@@ -676,7 +676,7 @@ namespace freak_store.Data.Migrations
 
                     b.HasOne("freak_store.Models.Discount", null)
                         .WithMany("Products")
-                        .HasForeignKey("DiscountId1");
+                        .HasForeignKey("DiscountId");
 
                     b.HasOne("freak_store.Models.Inventory", "Inventory")
                         .WithMany()
