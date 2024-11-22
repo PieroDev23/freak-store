@@ -1,0 +1,15 @@
+﻿/* Layout-specific styles */
+a.navbar-brand {
+  word-break: break-all;
+}
+
+.card-login {
+  background-color: #1d284c;
+  color: white;
+}
+
+.footer {
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}

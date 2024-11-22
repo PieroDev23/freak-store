@@ -1,0 +1,23 @@
+@{
+    ViewBag.Title = "Confirmación de Pago";
+}
+
+<div class="container text-center mt-5">
+    <div class="card shadow-lg p-4" style="max-width: 600px; margin: 0 auto; border-radius: 15px;">
+        <div class="card-body">
+            <h2 class="card-title text-success mb-4">¡Pago Confirmado!</h2>
+
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["SuccessMessage"]
+                </div>
+            }
+
+            <p class="card-text">Gracias por tu compra. Tu pago ha sido procesado con éxito.</p>
+            <p class="card-text">Puedes revisar tu pedido en la sección <strong>Pedidos</strong> de tu cuenta.</p>
+
+            <a href="/" class="btn btn-primary mt-3">Volver a la Tienda</a>
+        </div>
+    </div>
+</div>

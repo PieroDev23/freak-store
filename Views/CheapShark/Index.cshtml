@@ -1,0 +1,33 @@
+@model List<freak_store.Controllers.CheapSharkDeal>
+
+@{
+    ViewData["Title"] = "Ofertas de CheapShark";
+}
+
+<h2 class="text-center mb-4">Ofertas de CheapShark</h2>
+
+<div class="container">
+    <div class="row">
+        @if (Model != null && Model.Any())
+        {
+            foreach (var deal in Model)
+            {
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <img src="@deal.Thumb" class="card-img-top" alt="@deal.Title" style="height: 200px; object-fit: cover;">
+                        <div class="card-body">
+                            <h5 class="card-title">@deal.Title</h5>
+                            <p class="card-text"><strong>Precio normal:</strong> $@deal.NormalPrice</p>
+                            <p class="card-text"><strong>Precio en oferta:</strong> $@deal.SalePrice</p>
+                            <a href="https://www.cheapshark.com/redirect?dealID=@deal.StoreID" target="_blank" class="btn btn-primary w-100">Ver Oferta</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p class="text-center">No se encontraron ofertas en este momento.</p>
+        }
+    </div>
+</div>

@@ -1,0 +1,58 @@
+@model IEnumerable<freak_store.Models.Product>
+@{
+    ViewBag.Title = "Catálogo de Productos";
+}
+
+<h2>Catálogo de Productos</h2>
+
+<!-- Mostrar mensaje de error si no se encuentra ningún producto -->
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-warning" role="alert">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+<!-- Filtro de categorías -->
+<form asp-action="Index" method="get" class="mb-4">
+    <div class="form-group d-flex align-items-center">
+        <label for="categoryId" class="me-2"><strong>Filtrar por categoría:</strong></label>
+        <select name="categoryId" id="categoryId" class="form-select w-auto" onchange="this.form.submit()">
+            <option value="">Todas las Categorías</option>
+            @foreach (var category in ViewBag.Categories)
+            {
+                <option value="@category.Id">@category.Name</option>
+            }
+        </select>
+    </div>
+</form>
+
+<hr />
+
+<div class="row">
+    @if (Model != null && Model.Any())
+    {
+        @foreach (var product in Model)
+        {
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <img class="card-img-top" src="@product.Img" alt="@product.Name" />
+                    <div class="card-body">
+                        <h5 class="card-title">@product.Name</h5>
+                        <p class="card-text">@product.Description</p>
+                        <p><strong>Precio:</strong> S/ @product.Price</p>
+                        <p><strong>Categoría:</strong> @product.Category.Name</p>
+                        <!-- Enlace a la vista de detalles -->
+                        <a href="@Url.Action("Details", "Catalog", new { id = product.Id })" class="btn btn-primary">Ver detalles</a>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="col-12">
+            <p class="text-center">No hay productos disponibles en esta categoría.</p>
+        </div>
+    }
+</div>

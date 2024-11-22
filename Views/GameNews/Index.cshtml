@@ -1,0 +1,28 @@
+@using Newtonsoft.Json.Linq
+@model JArray
+
+@{
+    ViewData["Title"] = "Noticias de Videojuegos";
+}
+
+<h1 class="text-center mb-4">Últimas Noticias de Videojuegos</h1>
+
+<div class="container">
+    <div class="row">
+        @foreach (var news in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">@news["title"]</h5>
+                        <p class="card-text">@news["description"]</p>
+                        <a href="@news["open_giveaway_url"]" class="btn btn-primary" target="_blank">Leer más</a>
+                    </div>
+                    <div class="card-footer text-muted">
+                        Publicado el @news["published_date"]
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

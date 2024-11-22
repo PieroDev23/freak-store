@@ -1,0 +1,19 @@
+@{
+    ViewData["Title"] = "Panel de Administración";
+}
+
+<h1>Bienvenido al Panel de Administración</h1>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-4">
+            <a href="@Url.Action("Index", "Products")" class="btn btn-primary w-100">Gestión de Productos</a>
+        </div>
+        <div class="col-md-4">
+            <a href="@Url.Action("Index", "Categories")" class="btn btn-primary w-100">Gestión de Categorías</a>
+        </div>
+        <div class="col-md-4">
+            <a href="@Url.Action("Index", "Users")" class="btn btn-primary w-100">Gestión de Usuarios</a>
+        </div>
+    </div>
+</div>

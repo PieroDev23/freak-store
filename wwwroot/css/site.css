@@ -1,0 +1,49 @@
+/* Global styles */
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.carousel-inner img {
+  width: 100%;
+  max-height: 600px;
+  object-fit: cover;
+}
+
+@media (max-width: 768px) {
+  .carousel-inner img {
+    max-height: 400px;
+  }
+}
+
+/* Sticky Footer: Asegura que el footer siempre esté en el fondo */
+html {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  margin: 0;
+}
+
+main {
+  flex-grow: 1;
+}
+
+footer {
+  background-color: #1d284c; /* Color de fondo del footer */
+  color: #ffffff; /* Color del texto */
+  text-align: center;
+  padding: 10px 0;
+}

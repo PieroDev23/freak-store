@@ -1,0 +1,102 @@
+/* Color variables */
+:root {
+  --primary-color: #1d284c; /* Azul oscuro */
+  --accent-color: #2071a3; /* Azul claro */
+  --navbar-background: #e3e3e3c4; /* Gris claro ligeramente más oscuro */
+  --navbar-link-color: #1d284c; /* Azul oscuro acorde con la paleta */
+  --footer-background: #1d284c; /* Azul oscuro para el footer */
+}
+
+/* Navbar styles */
+.navbar {
+  background-color: var(--primary-color); /* Usar el nuevo color */
+  border: none; /* Sin bordes */
+}
+
+.navbar .nav-link,
+.navbar .navbar-brand {
+  color: var(--text-dark-color); /* Texto en azul oscuro */
+}
+
+.navbar .nav-link:hover {
+  color: var(--accent-color); /* Cambiar color del texto al pasar el mouse */
+}
+
+/* Footer styles */
+footer {
+  background-color: var(--footer-background);
+  color: white;
+  text-align: center;
+  padding: 1rem 0; /* Espaciado interno para mejor apariencia */
+  font-size: 0.9rem;
+}
+
+/* Button styles */
+.btn-primary {
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+/* Ajuste general para el contenedor */
+body {
+  background-color: #f8f9fa; /* Fondo gris claro para todo el sitio */
+  font-family: "Arial", sans-serif; /* Tipografía para uniformidad */
+}
+
+/* Ajustes para el carrusel */
+.carousel-inner img {
+  max-height: 400px; /* Altura máxima para las imágenes del carrusel */
+  object-fit: cover; /* Asegura que las imágenes llenen el espacio */
+}
+
+/* Cards styles */
+.card {
+  border: 1px solid #ddd; /* Borde claro para las tarjetas */
+  border-radius: 8px; /* Esquinas redondeadas */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+}
+
+.card:hover {
+  transform: translateY(-5px); /* Movimiento ligero al hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Más sombra al hover */
+}
+
+.card .card-title {
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.card .btn-primary {
+  width: 100%; /* Botón que ocupe todo el ancho */
+  margin-top: 10px;
+}
+
+/* Footer links */
+footer a {
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+  color: white;
+}
+/* Ajustes para evitar el movimiento del card al hacer hover */
+.card:hover {
+  transform: none; /* Desactiva cualquier transformación */
+  box-shadow: none; /* Si deseas mantener la sombra estática */
+  transition: none; /* Desactiva cualquier transición */
+}
+
+/* Estilo estándar del card */
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

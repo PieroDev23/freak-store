@@ -1,0 +1,43 @@
+@model freak_store.Models.ShoppingCart
+
+<h2>Carrito de Compras</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Producto</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Total</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>@item.Product.Name</td>
+                <td>S/ @item.Price</td>
+                <td>
+                    <form asp-action="UpdateQuantity" asp-controller="ShoppingCart" method="post">
+                        <input type="hidden" name="productId" value="@item.ProductId" />
+                        <input type="number" name="quantity" value="@item.Quantity" min="1" class="form-control" style="width: 60px; display: inline-block;" />
+                        <button type="submit" class="btn btn-primary">Actualizar</button>
+                    </form>
+                </td>
+                <td>S/ @(item.Price * item.Quantity)</td>
+                <td>
+                    <form asp-action="RemoveFromCart" asp-controller="ShoppingCart" method="post">
+                        <input type="hidden" name="productId" value="@item.ProductId" />
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p><strong>Total:</strong> S/ @Model.Items.Sum(i => i.Price * i.Quantity)</p>
+
+<form asp-action="Checkout" asp-controller="ShoppingCart" method="get">
+    <button type="submit" class="btn btn-success">Proceder al pago</button>
+</form>
